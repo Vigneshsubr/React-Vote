@@ -35,7 +35,7 @@ function SignUpHeader() {
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
-                <Dropdown.Item as={Link} to="/signup">Sign Out</Dropdown.Item>
+                
               </Dropdown.Menu>
             </Dropdown>
           </Nav>
