@@ -1,84 +1,67 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus, faEdit, faSearch, faListDots } from '@fortawesome/free-solid-svg-icons';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Offcanvas } from 'react-bootstrap';
 
-const Sidebar = () => {
-  const [hoveredLink, setHoveredLink] = useState(null);
-  const location = useLocation(); 
-
-  const handleMouseEnter = (link) => {
-    setHoveredLink(link);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredLink(null);
-  };
-
-  const getLinkStyle = (link, path) => ({
-    backgroundColor: hoveredLink === link || location.pathname === path ? '#0d6efd' : 'transparent',
-    color: 'white',
-    textDecoration: 'none',
-    fontSize: '1.1rem',
-  });
-
+const Sidebar = ({ show, handleClose }) => {
   return (
-    <div
-      className="d-flex flex-column p-5 bg-dark text-white position-fixed" 
-      style={{ width: '250px', height: '100vh' }} 
-    >
-      <ul className="nav nav-pills flex-column mb-auto">
-        <li className="nav-item mb-4 mt-2">
-          <Link
-            to="/create"
-            className="nav-link"
-            style={getLinkStyle('createuser', '/createuser')}
-            onMouseEnter={() => handleMouseEnter('createuser')}
-            onMouseLeave={handleMouseLeave}
-          >
-            <FontAwesomeIcon icon={faUserPlus} className="me-2" />
-            Create User
-          </Link>
-        </li>
-        <li className="nav-item mb-4">
-          <Link
-            to="/update/id"
-            className="nav-link pr-2"
-            style={getLinkStyle('update', '/update/id')}
-            onMouseEnter={() => handleMouseEnter('update')}
-            onMouseLeave={handleMouseLeave}
-          >
-            <FontAwesomeIcon icon={faEdit} className="me-2" />
-            Update User
-          </Link>
-        </li>
-        <li className="nav-item mb-4 ">
-          <Link
-            to="/user/1"
-            className="nav-link"
-            style={getLinkStyle('get', '/user/1')}
-            onMouseEnter={() => handleMouseEnter('get')}
-            onMouseLeave={handleMouseLeave}
-          >
-            <FontAwesomeIcon icon={faSearch} className="me-2" />
-            User Details
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link
-            to="/list"
-            className="nav-link"
-            style={getLinkStyle('list', '/list')}
-            onMouseEnter={() => handleMouseEnter('list')}
-            onMouseLeave={handleMouseLeave}
-          >
-            <FontAwesomeIcon icon={faListDots} className="me-2" />
-            List Users
-          </Link>
-        </li>
-      </ul>
-    </div>
+    <Offcanvas show={show} onHide={handleClose} placement="start" style={{ backgroundColor: '#f8f9fa', width: '250px' }}>
+      <Offcanvas.Header closeButton>
+        <Offcanvas.Title>Menu</Offcanvas.Title>
+      </Offcanvas.Header>
+      <Offcanvas.Body>
+        <ul className="list-unstyled">
+          <li className="mb-2">
+            <Link 
+              to="/dashboard/getvoters" 
+              onClick={handleClose} 
+              className="text-decoration-none text-dark p-2 d-block rounded hover-link"
+              style={{ transition: 'background-color 0.3s', borderRadius: '5px' }} 
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e2e6ea'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+            >
+              Get Voters
+            </Link>
+          </li>
+          <li className="mb-2">
+            <Link 
+              to="/dashboard/createvoters" 
+              onClick={handleClose} 
+              className="text-decoration-none text-dark p-2 d-block rounded hover-link"
+              style={{ transition: 'background-color 0.3s', borderRadius: '5px' }} 
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e2e6ea'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+            >
+              Create Voters
+            </Link>
+          </li>
+          <li className="mb-2">
+            <Link 
+              to="/dashboard/userdetails" 
+              onClick={handleClose} 
+              className="text-decoration-none text-dark p-2 d-block rounded hover-link"
+              style={{ transition: 'background-color 0.3s', borderRadius: '5px' }} 
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e2e6ea'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+            >
+              User Details
+            </Link>
+          </li>
+          <li className="mb-2">
+            <Link 
+              to="/dashboard/updateusers" 
+              onClick={handleClose} 
+              className="text-decoration-none text-dark p-2 d-block rounded hover-link"
+              style={{ transition: 'background-color 0.3s', borderRadius: '5px' }} 
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e2e6ea'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+            >
+              Update Users
+            </Link>
+          </li>
+          {/* Add more sidebar links as needed */}
+        </ul>
+      </Offcanvas.Body>
+    </Offcanvas>
   );
 };
 

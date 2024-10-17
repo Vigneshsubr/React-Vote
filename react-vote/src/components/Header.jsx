@@ -1,33 +1,38 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Dropdown } from 'react-bootstrap';
+import { Navbar, Dropdown, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import 'bootstrap/dist/css/bootstrap.min.css'; 
-import ftslogo from '../asserts/images/ftslogo.png'
+import { faBars, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Inidalogo from '../asserts/images/Inida.png'; // Your logo
+import '../App.css'; // Ensure this import is present
 
-function Header() {
+function Header({ onSidebarToggle, username }) {
   return (
-    <nav className="d-flex justify-content-between align-items-center bg-dark text-white position-fixed w-100" 
-         style={{ zIndex: 1000, height: '80px' }} 
-    >
-      <div className="d-inline-flex align-items-center">
-        <img src={ftslogo} alt="Logo" style={{ width: '80px', height: '80px'}} />
-        <h1 className="h6 ms-3 mb-0 fst-italic fs-5">Academy</h1>
-      </div>
-      <div className="d-flex align-items-center">
-        <Dropdown>
-          <Dropdown.Toggle variant="link" id="profile-dropdown" className="text-white">
-            <FontAwesomeIcon icon={faUserCircle} size="xl"/> 
-          </Dropdown.Toggle>
+    <Navbar expand="lg" bg="light" variant="light" className="position-fixed w-100" style={{ zIndex: 1000, height: '80px' }}>
+      <div className="container">
+        <Button onClick={onSidebarToggle} variant="link" className="text-dark me-3">
+          <FontAwesomeIcon icon={faBars} size="lg" />
+        </Button>
+        <Navbar.Brand as={Link} to="/">
+          <img src={Inidalogo} alt="Logo" style={{ width: '50px', height: '50px' }} />
+          <span className="ms-3 h5 mb-0">VOTEINDIA</span>
+        </Navbar.Brand>
+        
+        {/* Display logged-in username */}
+        <span className="ms-auto me-3 h6 mb-0">{username}</span>
 
-          <Dropdown.Menu align="end">
+        <Dropdown align="end">
+          <Dropdown.Toggle variant="link" id="profile-dropdown" className="text-dark">
+            <FontAwesomeIcon icon={faUserCircle} size="xl" />
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
             <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/signout">Sign Out</Dropdown.Item>
+            <Dropdown.Item as={Link} to="/signup">Sign Out</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>
-    </nav>
+    </Navbar>
   );
 }
 

@@ -27,6 +27,11 @@
 .App-link {
   color: #61dafb;
 }
+.hover-link:hover {
+  color: #007bff; /* Change this to your desired hover color */
+  text-decoration: underline; /* Optional: add underline on hover */
+}
+
 
 @keyframes App-logo-spin {
   from {
@@ -36,3 +41,5 @@
     transform: rotate(360deg);
   }
 }
+
+

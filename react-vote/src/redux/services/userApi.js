@@ -17,18 +17,9 @@ export const userApi = createApi({
     endpoints:(build) =>({
         addSignUpUsers:build.mutation({
             query:(createUserSignUp) =>({
-                url:"auth/sign-up/user",
+                url:"auth/sign-up",
                 method:"POST",
                 body:createUserSignUp,
-            }),
-            invalidatesTags:['User']
-        }),
-
-        addSignUpAdmins:build.mutation({
-            query:(createAdminSignUp) =>({
-                url:"auth/sign-up/admin",
-                method:"POST",
-                body:createAdminSignUp,
             }),
             invalidatesTags:['User']
         }),
@@ -41,7 +32,8 @@ export const userApi = createApi({
             }),
             invalidatesTags:['User']
         }),
+
     })
 })
 
-export const {useAddSignUpUsersMutation,useAddSignUpAdminsMutation,useAddLoginMutation} = userApi;
+export const {useAddSignUpUsersMutation,useAddLoginMutation} = userApi;

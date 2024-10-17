@@ -19,36 +19,42 @@ const SignIn = () => {
 
     useEffect(() => {
         sessionStorage.removeItem('Token');
-        localStorage.removeItem('Token');
+        sessionStorage.removeItem('Name'); // Also remove the Name if needed
     }, []);
+    
 
     const onSubmit = async (data) => {
         try {
             const result = await login(data);
-            console.log("API Response: ", result);  // Log the full API response for debugging
-
-            // Check if we received a valid response and status code
+            console.log("API Response: ", result); // Log the entire API response to verify
+    
             if (result?.data?.statusCode === 200) {
-                const token = result.data.accessToken;  // Access the token directly from data
+                const token = result.data.accessToken;
+                const name = result.data.name || "Guest"; // Get the name from the response
+    
+                // Store both token and name in sessionStorage
                 sessionStorage.setItem('Token', token);
+                sessionStorage.setItem('Name', name); // Store the name
+    
                 toast.success("Login successful!", { autoClose: 500 });
-
-                // Redirect after a successful login
+    
                 setTimeout(() => {
-                    navigate('/library/book');
-                }, 1501);
-
-                reset();  // Reset the form fields
+                    navigate('/dashboard/getvoters');
+                }, 1500);
+                reset();
             } else {
-                // Handle the case when the login is not successful
                 const errorMessage = result.data.message || "Login failed. Please try again.";
                 toast.error(errorMessage, { autoClose: 1500 });
             }
         } catch (error) {
-            console.error("Error during login: ", error);  // Log any error
+            console.error("Error during login: ", error);
             toast.error("An error occurred during submission. Please try again.", { autoClose: 1500 });
         }
     };
+    
+    
+    
+    
 
     return (
         <div className="d-flex justify-content-center align-items-center vh-100">
@@ -84,9 +90,9 @@ const SignIn = () => {
 
                             <div className="text-center">
                                 <small className="text-muted">
-                                    Way to SignUp
-                                    <span onClick={() => navigate('/')} style={{ cursor: "pointer", color: '#007bff' }}>
-                                        &nbsp;sign up
+                                    Way to 
+                                    <span onClick={() => navigate('/signup')} style={{ cursor: "pointer", color: '#007bff' }}>
+                                        &nbsp;Sign up
                                     </span>
                                 </small>
                             </div>
