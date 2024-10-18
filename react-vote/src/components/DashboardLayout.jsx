@@ -14,15 +14,13 @@ const DashboardLayout = () => {
   useEffect(() => {
     // Get the name from sessionStorage
     const storedName = sessionStorage.getItem('Name');
-    console.log("Stored Name in sessionStorage: ", storedName); // Debug log
+    console.log("Stored Name in sessionStorage: ", storedName);
     if (storedName) {
         setUsername(storedName); // Set the username from sessionStorage
     } else {
         setUsername("Guest"); // Fallback to 'Guest' if no name is found
     }
-}, []);
-
-// Empty dependency array ensures this effect runs once when the component mounts
+  }, []);
 
   return (
     <div className="d-flex flex-column" style={{ minHeight: '100vh' }}>

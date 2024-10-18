@@ -5,7 +5,7 @@ import { useGetSingleUsersQuery, useUpdateUsersMutation } from '../redux/service
 const UpdateUser = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data: user, isLoading, error } = useGetSingleUsersQuery(id);
+  const { data: user, isLoading, error, refetch } = useGetSingleUsersQuery(id);
   const [updateUsers, { isLoading: isUpdating }] = useUpdateUsersMutation();
 
   const [formData, setFormData] = useState({
@@ -14,20 +14,20 @@ const UpdateUser = () => {
     role: '',
     age: '',
     address: '',
-    gender: '', // Add gender to formData
-    profile_Image: null,
+    gender: '',
+    profileImage: null,
   });
 
   useEffect(() => {
     if (user) {
       setFormData({
-        name: user.name,
-        email: user.email,
-        role: user.role,
+        name: user.name || '',
+        email: user.email || '',
+        role: user.role || '',
         age: user.age || '',
         address: user.address || '',
-        gender: user.gender || '', // Populate gender from user data
-        profile_Image: null,
+        gender: user.gender || '',
+        profileImage: null,
       });
     }
   }, [user]);
@@ -38,26 +38,31 @@ const UpdateUser = () => {
   };
 
   const handleImageChange = (e) => {
-    setFormData({ ...formData, profile_Image: e.target.files[0] });
+    setFormData({ ...formData, profileImage: e.target.files[0] });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedUserData = new FormData();
 
+    // Append all form fields to FormData
     Object.keys(formData).forEach((key) => {
-      if (formData[key]) {
-        updatedUserData.append(key, formData[key]);
-      }
+      updatedUserData.append(key, formData[key]);
     });
 
     try {
-      await updateUsers({ id, ...updatedUserData }).unwrap();
-      navigate(`/userdetails/${id}`);
+      await updateUsers({ id, updateUserData: updatedUserData }).unwrap();
+      navigate(`/dashboard/userdetails/${id}`);
+      refetch();
     } catch (error) {
       console.error('Update failed', error);
       alert('Update failed: ' + (error.data?.message || 'Unknown error'));
     }
+  };
+
+  // Handle Back Button - navigate to previous page or user list
+  const handleBack = () => {
+    navigate(-1); // Goes back to the previous page
   };
 
   if (isLoading) {
@@ -87,13 +92,6 @@ const UpdateUser = () => {
                   <input type="email" className="form-control" id="email" name="email" value={formData.email} onChange={handleInputChange} required />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="role" className="form-label">Role</label>
-                  <select className="form-select" id="role" name="role" value={formData.role} onChange={handleInputChange} required>
-                    <option value="VOTER">Voter</option>
-                    <option value="ADMIN">Admin</option>
-                  </select>
-                </div>
-                <div className="mb-3">
                   <label htmlFor="age" className="form-label">Age</label>
                   <input type="number" className="form-control" id="age" name="age" value={formData.age} onChange={handleInputChange} required />
                 </div>
@@ -105,18 +103,23 @@ const UpdateUser = () => {
                   <label htmlFor="gender" className="form-label">Gender</label>
                   <select className="form-select" id="gender" name="gender" value={formData.gender} onChange={handleInputChange} required>
                     <option value="">Select Gender</option>
-                    <option value="MALE">Male</option>
-                    <option value="FEMALE">Female</option>
-                    <option value="OTHER">Other</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="profile_Image" className="form-label">Profile Image</label>
-                  <input type="file" className="form-control" id="profile_Image" name="profile_Image" onChange={handleImageChange} accept="image/*" />
+                  <label htmlFor="profileImage" className="form-label">Profile Image</label>
+                  <input type="file" className="form-control" id="profileImage" name="profileImage" onChange={handleImageChange} accept="image/*" />
                 </div>
                 <div className="d-grid">
                   <button type="submit" className="btn btn-primary" disabled={isUpdating}>
                     {isUpdating ? <div className="spinner-border spinner-border-sm" role="status"><span className="visually-hidden">Updating...</span></div> : 'Update User'}
+                  </button>
+                </div>
+                <div className="d-grid mt-3">
+                  <button type="button" className="btn btn-secondary" onClick={handleBack}>
+                    Back
                   </button>
                 </div>
               </form>

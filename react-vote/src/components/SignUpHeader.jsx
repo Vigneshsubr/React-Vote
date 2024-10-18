@@ -22,20 +22,15 @@ function SignUpHeader() {
         {/* Collapsible Menu */}
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            {/* Sign Up Link */}
             <Nav.Link as={Link} to="/signup">Sign Up</Nav.Link>
-
-            {/* Sign In Link */}
             <Nav.Link as={Link} to="/signin">Sign In</Nav.Link>
 
-            {/* Profile Dropdown */}
             <Dropdown align="end">
               <Dropdown.Toggle variant="link" id="profile-dropdown" className="text-dark">
                 <FontAwesomeIcon icon={faUserCircle} size="xl" />
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
-                
               </Dropdown.Menu>
             </Dropdown>
           </Nav>

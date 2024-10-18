@@ -26,6 +26,8 @@ const CreateUser = () => {
 
     // Handle image file input changes
     const handleImageChange = (e) => {
+        console.log(e.target.files,"ddd");
+        
         setFormData({
             ...formData,
             profile_Image: e.target.files[0] // Adjusted the name to 'profile_Image'

@@ -43,10 +43,19 @@ export const voterApi = createApi({
         }),
 
         updateUsers: build.mutation({
-            query: (updateUserData, id) => ({
+            query: ({ id, updateUserData }) => ({
                 url: `users/${id}`, // Ensure the id is defined and valid
                 method: 'PUT',
                 body: updateUserData,
+            }),
+            invalidatesTags: ['Voter'],
+        }),
+
+
+        deleteUser: build.mutation({
+            query:(id) =>({
+                url: `users/${id}`,
+                method: 'DELETE',
             }),
             invalidatesTags: ['Voter'],
         })
@@ -56,4 +65,4 @@ export const voterApi = createApi({
     })
 })
 
-export const {usePostUsersMutation, useGetUsersQuery,useGetSingleUsersQuery,useUpdateUsersMutation} = voterApi;
+export const {usePostUsersMutation, useGetUsersQuery,useGetSingleUsersQuery,useUpdateUsersMutation,useDeleteUserMutation} = voterApi;

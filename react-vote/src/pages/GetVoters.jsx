@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import { useGetUsersQuery } from '../redux/services/voterApi'; // Adjust the import based on your project structure
-import { useNavigate} from 'react-router-dom';
+import { useGetUsersQuery, useDeleteUserMutation } from '../redux/services/voterApi';
+import { useNavigate } from 'react-router-dom';
+import Modal from '../components/Modal';
+import { Icon } from '@iconify/react'; // Import Icon from Iconify
 
 const GetVoters = () => {
     // Fetch all users
-    const { data: usersData, error, isLoading } = useGetUsersQuery();
+    const { data: usersData, error, isLoading, refetch } = useGetUsersQuery();
+    const [deleteUser] = useDeleteUserMutation();
     const navigate = useNavigate();
-   
+
+    // Modal state
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [userIdToDelete, setUserIdToDelete] = useState(null);
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
-    const usersPerPage = 5; // Set the number of users per page
+    const usersPerPage = 5;
 
     // Calculate total pages
     const totalPages = usersData ? Math.ceil(usersData.length / usersPerPage) : 1;
@@ -36,20 +42,33 @@ const GetVoters = () => {
         let binary = '';
         let bytes = new Uint8Array(buffer);
         bytes.forEach((byte) => (binary += String.fromCharCode(byte)));
-        return window.btoa(binary); // Base64 encode
+        return window.btoa(binary);
     };
 
     const handleUpdate = (userId) => {
-        // Logic for updating the user, you can navigate to an update page or show a modal
-        navigate(`/dashboard/updateusers/${userId}`)
+        navigate(`/dashboard/updateusers/${userId}`);
         console.log(`Update user with ID: ${userId}`);
     };
 
     const handleDelete = (userId) => {
-        // Logic for deleting the user
-        console.log(`Delete user with ID: ${userId}`);
-        navigate(`/dashboard/deleteusers/${userId}`)
-        // You can also call an API to delete the user and then refetch the data
+        setUserIdToDelete(userId);
+        setIsModalOpen(true);
+    };
+
+    const confirmDelete = async () => {
+        try {
+            await deleteUser(userIdToDelete).unwrap();
+            console.log(`User with ID: ${userIdToDelete} deleted successfully`);
+            refetch();
+            setIsModalOpen(false);
+            setUserIdToDelete(null);
+        } catch (err) {
+            console.error('Failed to delete user: ', err);
+        }
+    };
+
+    const handleNavigateToUserDetail = (userId) => {
+        navigate(`/dashboard/userdetails/${userId}`); // Assuming this is the user details route
     };
 
     if (isLoading) {
@@ -67,7 +86,7 @@ const GetVoters = () => {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Avatar</th> 
+                        <th>Avatar</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Gender</th>
@@ -82,7 +101,6 @@ const GetVoters = () => {
                             <tr key={user.id}>
                                 <td>{user.id}</td>
                                 <td>
-                                    {/* Convert profileImage byte array to Base64 */}
                                     {user.profileImage ? (
                                         <img
                                             src={`data:image/jpeg;base64,${convertToBase64(user.profileImage)}`}
@@ -93,24 +111,30 @@ const GetVoters = () => {
                                         'No Image'
                                     )}
                                 </td>
-                                <td>{user.name}</td>
+                                <td>
+                                    <span 
+                                        onClick={() => handleNavigateToUserDetail(user.id)} 
+                                        style={{ cursor: 'pointer', color: 'inherit', textDecoration: 'underline' }}
+                                    >
+                                        {user.name}
+                                    </span>
+                                </td>
                                 <td>{user.email}</td>
                                 <td>{user.gender}</td>
                                 <td>{user.age}</td>
                                 <td>{user.address}</td>
                                 <td>
-                                    {/* Action buttons */}
                                     <button
                                         onClick={() => handleUpdate(user.id)}
                                         className="btn btn-warning btn-sm mx-1"
                                     >
-                                        Update
+                                        <Icon icon="mdi:pencil" /> {/* Update Icon */}
                                     </button>
                                     <button
                                         onClick={() => handleDelete(user.id)}
                                         className="btn btn-danger btn-sm mx-1"
                                     >
-                                        Delete
+                                        <Icon icon="mdi:delete" /> {/* Delete Icon */}
                                     </button>
                                 </td>
                             </tr>
@@ -125,7 +149,7 @@ const GetVoters = () => {
 
             {/* Pagination Controls */}
             <div className="pagination-controls">
-                <button
+                <button 
                     onClick={handlePreviousPage}
                     disabled={currentPage === 1}
                     className="btn btn-primary"
@@ -141,6 +165,16 @@ const GetVoters = () => {
                     Next
                 </button>
             </div>
+
+            {/* Confirmation Modal */}
+            <Modal 
+                isOpen={isModalOpen} 
+                onClose={() => setIsModalOpen(false)} 
+                onSave={confirmDelete} 
+                title="Confirm Deletion"
+            >
+                <p>Are you sure you want to delete this voter?</p>
+            </Modal>
         </div>
     );
 };
