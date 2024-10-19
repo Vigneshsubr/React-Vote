@@ -80,8 +80,8 @@ const GetVoters = () => {
     }
 
     return (
-        <div className="container mt-5">
-            <h2>Voter List</h2>
+        <div className="container mt-5 ">
+            {/* <h2>Voter List</h2> */}
             <table className="table table-striped">
                 <thead>
                     <tr>

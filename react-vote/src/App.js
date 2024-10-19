@@ -12,6 +12,8 @@ import UpdateUser from './pages/UpdateUser';
 import Layout from './components/Layout';
 import DashboardLayout from './components/DashboardLayout';
 import HomePage from './pages/HomePage';
+import VotersTab from './pages/VotersTab';
+import Vote from './pages/Vote';
 
 function App() {
   return (
@@ -24,12 +26,12 @@ function App() {
           <Route path='signin' element={<SignIn />} />
         </Route>
 
-        {/* Routes with Sidebar and Navbar */}
+        {/* Dashboard Layout with the VotersTab */}
         <Route path='dashboard' element={<DashboardLayout />}>
-          <Route path='getvoters' element={<GetVoters />} />
-          <Route path='createvoters' element={<CreateUser />} />
-          <Route path='userdetails/:id' element={<UserDetail />} />
-          <Route path='updateusers/:id' element={<UpdateUser />} />
+          {/* Voters page shows the VotersTab below the Navbar */}
+          <Route path='vote' element={<Vote />} />
+          <Route path="updateusers/:id" element={<UpdateUser />} />
+          <Route path="userdetails/:id" element={<UserDetail />} />
         </Route>
       </Routes>
     </Router>

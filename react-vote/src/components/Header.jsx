@@ -11,15 +11,16 @@ function Header({ onSidebarToggle, username }) {
   return (
     <Navbar expand="lg" bg="light" variant="light" className="position-fixed w-100" style={{ zIndex: 1000, height: '80px' }}>
       <div className="container">
-        <Button onClick={onSidebarToggle} variant="link" className="text-dark me-3">
+        {/* <Button onClick={onSidebarToggle} variant="link" className="text-dark me-3">
           <FontAwesomeIcon icon={faBars} size="lg" />
-        </Button>
+        </Button> */}
         <Navbar.Brand as={Link} to="/">
           <img src={Inidalogo} alt="Logo" style={{ width: '50px', height: '50px' }} />
           <span className="ms-3 h5 mb-0">VOTEINDIA</span>
         </Navbar.Brand>
         
         {/* Display logged-in username */}
+        <Link to="/dashboard/vote" className="ms-3 h6 mb-0 text-dark">Voters</Link>
         <span className="ms-auto me-3 h6 mb-0">{username}</span>
 
         <Dropdown align="end">
@@ -31,6 +32,10 @@ function Header({ onSidebarToggle, username }) {
             <Dropdown.Item as={Link} to="/signup">Sign Out</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
+
+
+        {/* Add Voters Link to Navbar */}
+       
       </div>
     </Navbar>
   );

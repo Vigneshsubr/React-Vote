@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Nav, Dropdown } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { Navbar, Nav } from 'react-bootstrap';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Inidalogo from '../asserts/images/Inida.png' // Your logo
 
@@ -25,14 +25,14 @@ function SignUpHeader() {
             <Nav.Link as={Link} to="/signup">Sign Up</Nav.Link>
             <Nav.Link as={Link} to="/signin">Sign In</Nav.Link>
 
-            <Dropdown align="end">
+            {/* <Dropdown align="end">
               <Dropdown.Toggle variant="link" id="profile-dropdown" className="text-dark">
                 <FontAwesomeIcon icon={faUserCircle} size="xl" />
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
               </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown> */}
           </Nav>
         </Navbar.Collapse>
       </div>
