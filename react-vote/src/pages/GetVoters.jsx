@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useGetUsersQuery, useDeleteUserMutation } from '../redux/services/voterApi';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 import Modal from '../components/Modal';
 import { Icon } from '@iconify/react'; // Import Icon from Iconify
 
-const GetVoters = () => {
+const GetVoters = ({ onUpdateUser ,  onViewUser}) => {
     // Fetch all users
     const { data: usersData, error, isLoading, refetch } = useGetUsersQuery();
     const [deleteUser] = useDeleteUserMutation();
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
     // Modal state
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,16 +38,20 @@ const GetVoters = () => {
         }
     };
 
-    const convertToBase64 = (buffer) => {
-        let binary = '';
-        let bytes = new Uint8Array(buffer);
-        bytes.forEach((byte) => (binary += String.fromCharCode(byte)));
-        return window.btoa(binary);
-    };
+    // const convertToBase64 = (buffer) => {
+    //     let binary = '';
+    //     let bytes = new Uint8Array(buffer);
+    //     bytes.forEach((byte) => (binary += String.fromCharCode(byte)));
+    //     return window.btoa(binary);
+    // };
+
+    // const handleUpdate = (userId) => {
+    //     navigate(`/dashboard/updateusers/${userId}`);
+    //     console.log(`Update user with ID: ${userId}`);
+    // };
 
     const handleUpdate = (userId) => {
-        navigate(`/dashboard/updateusers/${userId}`);
-        console.log(`Update user with ID: ${userId}`);
+        onUpdateUser(userId); // Use the callback to switch tabs and pass userId
     };
 
     const handleDelete = (userId) => {
@@ -67,9 +71,15 @@ const GetVoters = () => {
         }
     };
 
+    // const handleNavigateToUserDetail = (userId) => {
+    //     navigate(`/dashboard/userdetails/${userId}`); // Assuming this is the user details route
+    // };
+
     const handleNavigateToUserDetail = (userId) => {
-        navigate(`/dashboard/userdetails/${userId}`); // Assuming this is the user details route
+        onViewUser(userId); // **Call the onViewUser callback when clicking on name** (Modified)
     };
+    
+    
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -81,7 +91,7 @@ const GetVoters = () => {
 
     return (
         <div className="container mt-5 ">
-            {/* <h2>Voter List</h2> */}
+            <h4 class="fst-italic mb-4">Voter List</h4>
             <table className="table table-striped">
                 <thead>
                     <tr>
@@ -103,10 +113,17 @@ const GetVoters = () => {
                                 <td>
                                     {user.profileImage ? (
                                         <img
-                                            src={`data:image/jpeg;base64,${convertToBase64(user.profileImage)}`}
-                                            alt={`${user.name}'s avatar`}
-                                            style={{ width: '50px', borderRadius: '50%' }}
-                                        />
+                                        src={`data:image/jpeg;base64,${user.profileImage}`}
+                                        alt={`${user.name}'s Profile`}
+                                        className="img-fluid rounded-circle"
+                                        style={{
+                                          width: '40px',
+                                          height: '40px',
+                                          objectFit: 'cover',
+                                          border: '3px solid #007BFF', // Border color
+                                          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                                        }}
+                                      />
                                     ) : (
                                         'No Image'
                                     )}

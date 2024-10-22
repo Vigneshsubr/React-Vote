@@ -49,7 +49,7 @@ const SignIn = () => {
                     toast.success("Login successful!", { autoClose: 500 });
     
                     setTimeout(() => {
-                        navigate('/dashboard/getvoters');
+                        navigate('/dashboard/vote');
                     }, 1500);
                     reset();
                 } else {
@@ -65,9 +65,7 @@ const SignIn = () => {
         }
     };
     
-    
-    
-    
+
     
     return (
         <div className="d-flex justify-content-center align-items-center vh-100">

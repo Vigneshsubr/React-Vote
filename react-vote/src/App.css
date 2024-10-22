@@ -42,4 +42,27 @@
   }
 }
 
+/* Add this to your CSS */
+.left-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50%; /* Adjust as needed */
+  height: 100vh;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1; /* Ensure the image stays beneath the form */
+}
+
+.card-wrapper {
+  position: relative;
+  z-index: 2; /* Ensure the form appears above the image */
+  max-width: 350px; /* Adjust to reduce card size */
+  margin: 0 auto;
+}
+
+
 
