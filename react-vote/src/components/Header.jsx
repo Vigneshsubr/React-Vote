@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Navbar, Dropdown, Button } from 'react-bootstrap';
+import { Navbar, Dropdown} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import {  faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Inidalogo from '../asserts/images/Inida.png'; // Your logo
 import '../App.css'; // Ensure this import is present
@@ -23,6 +23,7 @@ function Header({ onSidebarToggle, username }) {
         <Link to="/dashboard/vote" className="ms-3 h6 mb-0 text-dark">Voters</Link>
         <Link to="/dashboard/election" className="ms-3 h6 mb-0 text-dark">Election</Link>
         <Link to="/dashboard/candidate" className="ms-3 h6 mb-0 text-dark">Candidate</Link>
+        <Link to="/dashboard/poll" className="ms-3 h6 mb-0 text-dark">Poll</Link>
         <span className="ms-auto me-3 h6 mb-0">{username}</span>
 
         <Dropdown align="end">
