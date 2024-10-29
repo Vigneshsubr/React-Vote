@@ -1,103 +1,97 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { usePostPollMutation } from '../redux/services/pollApi'; // Adjust the import path based on your project structure
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { Form, Button, Alert } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { usePostPollMutation } from '../redux/services/pollApi'; // Adjust the import path
+import { useGetElectionQuery } from '../redux/services/electionApi';
+import Label from '../components/Label'; // Reuse Label component
+import Input from '../components/Input'; // Reuse Input component
 
 const CreatePoll = () => {
-  const navigate = useNavigate();
-  const [createPoll, { isLoading, isSuccess, isError, error }] = usePostPollMutation();
-  const [pollData, setPollData] = useState({ question: '', electionId: '' });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setPollData({ ...pollData, [name]: value });
-  };
+  const [pollName, setPollName] = useState('');
+  const [electionId, setElectionId] = useState('');
+  const [postPoll, { isLoading, isSuccess, isError }] = usePostPollMutation();
+  const { data: elections, error: electionsError, isLoading: isElectionsLoading } = useGetElectionQuery();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!pollData.question || !pollData.electionId) {
-      alert('All fields are required.');
-      return;
-    }
-
     try {
-      await createPoll(pollData).unwrap();
+      const pollData = {
+        pollName,
+        election: { id: electionId },
+      };
+      await postPoll(pollData).unwrap();
       alert('Poll created successfully!');
-      navigate(-1); // Navigate back after successful creation
-    } catch (err) {
-      console.error('Failed to create poll:', err);
-      alert('Failed to create poll: ' + (error.data?.message || 'Unknown error'));
+    } catch (error) {
+      console.error('Failed to create poll:', error);
     }
-  };
-
-  // Handle Back Button - navigate to previous page
-  const handleBack = () => {
-    navigate(-1); // Goes back to the previous page
   };
 
   return (
     <div className="container mt-5">
-      <div className="d-flex align-items-center mb-4">
-        <FontAwesomeIcon
-          icon={faArrowLeft}
-          className="me-2"
-          size="lg"
-          style={{ cursor: 'pointer', color: 'black' }}
-          onClick={handleBack} // Go back to the previous page
-        />
-        <h4 className="fst-italic m-0">Create Poll</h4>
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h4 className="fst-italic">Create New Poll</h4>
       </div>
+      <div className="col-12 border-0 bg-light">
+        <div className="p-4">
+          <form onSubmit={handleSubmit}>
+            <div className="row mb-3">
+              <div className="col-3">
+                <Label htmlFor="pollName" className="form-label">
+                  <strong>Poll Name:</strong>
+                </Label>
+              </div>
+              <div className="col-9">
+                <Input
+                  type="text"
+                  className="form-control"
+                  id="pollName"
+                  value={pollName}
+                  onChange={(e) => setPollName(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
 
-      <div className="bg-light p-4 border rounded">
-        <Form onSubmit={handleSubmit}>
-          {/* Question */}
-          <Form.Group controlId="formQuestion">
-            <Form.Label><strong>Question</strong></Form.Label>
-            <Form.Control
-              type="text"
-              name="question"
-              value={pollData.question}
-              onChange={handleChange}
-              required
-              placeholder="Enter poll question"
-            />
-          </Form.Group>
+            <div className="row mb-3">
+              <div className="col-3">
+                <Label htmlFor="electionId" className="form-label">
+                  <strong>Election:</strong>
+                </Label>
+              </div>
+              <div className="col-9">
+                <select
+                  id="electionId"
+                  className="form-select"
+                  value={electionId}
+                  onChange={(e) => setElectionId(e.target.value)}
+                  required
+                >
+                  <option value="" disabled>Select an Election</option>
+                  {isElectionsLoading ? (
+                    <option>Loading elections...</option>
+                  ) : electionsError ? (
+                    <option>Error loading elections</option>
+                  ) : (
+                    elections.map((election) => (
+                      <option key={election.id} value={election.id}>
+                        {election.name}  {/* Assuming election has a 'name' property */}
+                      </option>
+                    ))
+                  )}
+                </select>
+              </div>
+            </div>
 
-          {/* Election ID */}
-          <Form.Group controlId="formElectionId" className="mt-3">
-            <Form.Label><strong>Election ID</strong></Form.Label>
-            <Form.Control
-              type="text"
-              name="electionId"
-              value={pollData.electionId}
-              onChange={handleChange}
-              required
-              placeholder="Enter election ID"
-            />
-          </Form.Group>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Creating Poll...' : 'Create Poll'}
+            </button>
+          </form>
 
-          {/* Submit Button */}
-          <div className="d-grid mt-4">
-            <Button type="submit" variant="primary" disabled={isLoading}>
-              {isLoading ? <div className="spinner-border spinner-border-sm" role="status"><span className="visually-hidden">Creating...</span></div> : 'Create Poll'}
-            </Button>
-          </div>
-
-          {/* Back Button */}
-          <div className="d-grid mt-3">
-            <Button type="button" variant="secondary" onClick={handleBack}>
-              Back
-            </Button>
-          </div>
-
-          {/* Error and Success Messages */}
-          {isError && <Alert variant="danger" className="mt-3">Error: {error.message}</Alert>}
-          {isSuccess && <Alert variant="success" className="mt-3">Poll created successfully!</Alert>}
-        </Form>
+          {isSuccess && <p className="text-success mt-3">Poll created successfully!</p>}
+          {isError && <p className="text-danger mt-3">Error creating poll. Please try again.</p>}
+        </div>
       </div>
     </div>
   );

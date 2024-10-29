@@ -131,7 +131,7 @@ const GetVoters = ({ onUpdateUser ,  onViewUser}) => {
                                 <td>
                                     <span 
                                         onClick={() => handleNavigateToUserDetail(user.id)} 
-                                        style={{ cursor: 'pointer', color: 'inherit', textDecoration: 'underline' }}
+                                        style={{ cursor: 'pointer', color: 'inherit', textDecoration: 'None' }}
                                     >
                                         {user.name}
                                     </span>

@@ -20,10 +20,10 @@ function Header({ onSidebarToggle, username }) {
         </Navbar.Brand>
         
         {/* Display logged-in username */}
-        <Link to="/dashboard/vote" className="ms-3 h6 mb-0 text-dark">Voters</Link>
-        <Link to="/dashboard/election" className="ms-3 h6 mb-0 text-dark">Election</Link>
-        <Link to="/dashboard/candidate" className="ms-3 h6 mb-0 text-dark">Candidate</Link>
-        <Link to="/dashboard/poll" className="ms-3 h6 mb-0 text-dark">Poll</Link>
+        <Link to="/dashboard/vote" className="ms-3 h6 mb-0 text-dark text-decoration-none">Voters</Link>
+        <Link to="/dashboard/election" className="ms-3 h6 mb-0 text-dark text-decoration-none">Election</Link>
+        <Link to="/dashboard/candidate" className="ms-3 h6 mb-0 text-dark text-decoration-none">Candidate</Link>
+        <Link to="/dashboard/poll" className="ms-3 h6 mb-0 text-dark text-decoration-none">Poll</Link>
         <span className="ms-auto me-3 h6 mb-0">{username}</span>
 
         <Dropdown align="end">

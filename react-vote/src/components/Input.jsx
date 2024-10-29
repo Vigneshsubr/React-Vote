@@ -14,6 +14,7 @@ const Input = ({
   required,
   autoFocus,
   autoComplete,
+  readOnly 
 }) => {
   return (
     <input
@@ -30,6 +31,7 @@ const Input = ({
       required={required}
       autoFocus={autoFocus}
       autoComplete={autoComplete}
+      readOnly={readOnly}
       style={{
         cursor: disabled ? 'not-allowed' : 'default',
       }}

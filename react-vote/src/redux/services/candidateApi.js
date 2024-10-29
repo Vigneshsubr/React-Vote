@@ -22,8 +22,25 @@ export const candidateApi = createApi({
       }),
       invalidatesTags: ['Candidate'],
     }),
+
+    getAllCandidate: builder.query({
+      query: (getAllCandidate) => ({
+        url: `candidates`,
+        method: 'GET',
+        body: getAllCandidate,
+      }),
+      invalidatesTags: ['Candidate']
+    }),
+
+    deleteCandidate: builder.mutation({
+      query: (id) => ({
+        url: `candidates/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Candidate'],
+    })
   }),
 });
 
 // Ensure the correct export
-export const { usePostCandidateMutation } = candidateApi;
+export const { usePostCandidateMutation, useGetAllCandidateQuery, useDeleteCandidateMutation } = candidateApi;

@@ -5,7 +5,7 @@ import VotersTab from '../pages/VotersTab';
 const Vote = () => {
   return (
     <div>
-      <h3 class="fst-italic mb-4">Manage Voters</h3>
+      <h3 className="fst-italic mb-4">Manage Voters</h3>
       
       <VotersTab/>
       

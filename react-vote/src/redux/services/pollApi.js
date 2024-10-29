@@ -24,9 +24,18 @@ export const pollApi = createApi({
             }),
             invalidatesTags: ['Poll']
         }),
+
+        getPolls:build.query({
+            query: (getPolls)=>({
+                url:"polls",
+                method:"GET",
+                body:getPolls,
+            }),
+            invalidatesTags:['Poll']
+        })
     }),
 
 
 });
 
-export const {usePostPollMutation}= pollApi;
+export const {usePostPollMutation,useGetPollsQuery}= pollApi;

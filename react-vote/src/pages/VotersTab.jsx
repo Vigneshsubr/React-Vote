@@ -7,19 +7,17 @@ import UserDetail from './UserDetail';
 
 const VotersTab = () => {
   const [activeTab, setActiveTab] = useState('getVoters');
-  const [selectedUserId, setSelectedUserId] = useState(null); // State for selected user ID
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
-  // Callback to set the selected user ID when updating
   const handleUpdateUser = (userId) => {
     setSelectedUserId(userId);
-    setActiveTab('updateVoters'); // Switch to Update Voters tab
+    setActiveTab('updateVoters'); 
   };
+
   const handleViewUser = (userId) => {
-    setSelectedUserId(userId);  // Set the selected user's ID
-    setActiveTab('viewVoters'); // **Switch to the 'viewVoters' tab** (Modified)
+    setSelectedUserId(userId);  
+    setActiveTab('viewVoters'); 
   };
-
-
 
   return (
     <Tab.Container activeKey={activeTab} onSelect={(k) => setActiveTab(k)}>
@@ -43,26 +41,25 @@ const VotersTab = () => {
         <Col sm={12}>
           <Tab.Content>
             <Tab.Pane eventKey="getVoters">
-              <GetVoters onUpdateUser={handleUpdateUser}  onViewUser={handleViewUser}  /> {/* Pass the callback */}
+              <GetVoters onUpdateUser={handleUpdateUser} onViewUser={handleViewUser} />
             </Tab.Pane>
             <Tab.Pane eventKey="createVoters">
               <CreateUser />
             </Tab.Pane>
             <Tab.Pane eventKey="updateVoters">
               {selectedUserId ? (
-                <UpdateUser id={selectedUserId} /> // Render UpdateUser with ID
+                <UpdateUser id={selectedUserId} />
               ) : (
                 <div>Please select a user to update.</div>
               )}
             </Tab.Pane>
             <Tab.Pane eventKey="viewVoters">
               {selectedUserId ? (
-                <UserDetail id={selectedUserId} /> // Render UpdateUser with ID
+                <UserDetail id={selectedUserId} /> // Highlighted: Corrected rendering of UserDetail
               ) : (
-                <div>Please select a user to update.</div>
+                <div>Please select a user to view.</div> // Changed text for clarity
               )}
             </Tab.Pane>
-
           </Tab.Content>
         </Col>
       </Row>

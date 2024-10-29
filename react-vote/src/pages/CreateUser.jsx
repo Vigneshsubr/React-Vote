@@ -155,6 +155,8 @@ const CreateUser = () => {
                 value={formData.age}
                 onChange={handleChange}
                 placeholder="Enter age"
+                min="18" // Set the minimum age to 18
+                max="50" // Set the maximum age to 50
                 required
               />
             </div>

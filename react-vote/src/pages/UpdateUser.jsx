@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const UpdateUser = ({ id }) => {
   const navigate = useNavigate();
-  const { data: user, isLoading, error, refetch } = useGetSingleUsersQuery(id);
+  const { data: user, isLoading, error } = useGetSingleUsersQuery(id);
   const [updateUsers, { isLoading: isUpdating }] = useUpdateUsersMutation();
 
   const [formData, setFormData] = useState({
@@ -47,7 +47,6 @@ const UpdateUser = ({ id }) => {
     e.preventDefault();
     const updatedUserData = new FormData();
 
-    // Append all form fields to FormData
     Object.keys(formData).forEach((key) => {
       updatedUserData.append(key, formData[key]);
     });
@@ -55,16 +54,14 @@ const UpdateUser = ({ id }) => {
     try {
       await updateUsers({ id, updateUserData: updatedUserData }).unwrap();
       navigate(`/dashboard/userdetails/${id}`);
-      refetch();
     } catch (error) {
       console.error('Update failed', error);
       alert('Update failed: ' + (error.data?.message || 'Unknown error'));
     }
   };
 
-  // Handle Back Button - navigate to previous page or user list
   const handleBack = () => {
-    navigate(-1); // Goes back to the previous page
+    navigate(-1);
   };
 
   if (isLoading) {
@@ -89,7 +86,7 @@ const UpdateUser = ({ id }) => {
           className="me-2"
           size="lg"
           style={{ cursor: 'pointer', color: 'black' }}
-          onClick={handleBack} // Go back to the previous page
+          onClick={handleBack}
         />
         <h4 className="fst-italic m-0">Update User</h4>
       </div>
@@ -187,12 +184,6 @@ const UpdateUser = ({ id }) => {
           <div className="d-grid">
             <button type="submit" className="btn btn-primary" disabled={isUpdating}>
               {isUpdating ? <div className="spinner-border spinner-border-sm" role="status"><span className="visually-hidden">Updating...</span></div> : 'Update User'}
-            </button>
-          </div>
-          {/* Back Button */}
-          <div className="d-grid mt-3">
-            <button type="button" className="btn btn-secondary" onClick={handleBack}>
-              Back
             </button>
           </div>
         </form>
