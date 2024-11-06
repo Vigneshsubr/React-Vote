@@ -19,6 +19,13 @@ import Election from './pages/Election';
 import Poll from './pages/Poll';
 import Candidate from './pages/Candidate';
 
+// Import the new components for election workflow
+import ElectionList from './pages/ElectionList';  // List all elections
+import PollList from './pages/PollList';          // List polls under an election
+import CandidateList from './pages/CandidateList'; // List candidates under a poll
+import VoteForm from './pages/VoteForm';
+
+
 
 
 function App() {
@@ -55,8 +62,19 @@ function App() {
           <Route path='candidate' element={<Candidate />} />
         </Route>
 
+         {/* Election Workflow */}
+         <Route path='dashboard/elections' element={<DashboardLayout />}>
+          {/* Display all elections */}
+          <Route index element={<ElectionList />} />
+          {/* Show Polls under a selected Election */}
+          <Route path=":electionId/polls" element={<PollList />} />
+          {/* Show Candidates under a selected Poll */}
+          <Route path="poll/:pollId/candidates" element={<CandidateList />} />
+        </Route>
+
 
         <Route path="create-election" element={<CreateElection />} />
+        <Route path="/elections/:electionId/vote" element={<VoteForm />} />
        
       </Routes>
     </Router>

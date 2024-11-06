@@ -32,10 +32,20 @@ export const pollApi = createApi({
                 body:getPolls,
             }),
             invalidatesTags:['Poll']
+        }),
+
+        fetchCandidatesByPollId : build.query({
+            query:(pollId)=>({
+                url:`polls/${pollId}/candidates`,
+                method:"GET",
+            }),
+            invalidatesTags:['Poll']
         })
+
+
     }),
 
 
 });
 
-export const {usePostPollMutation,useGetPollsQuery}= pollApi;
+export const {usePostPollMutation,useGetPollsQuery,useFetchCandidatesByPollIdQuery}= pollApi;

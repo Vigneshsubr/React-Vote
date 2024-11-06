@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { Navbar, Dropdown} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {  faUserCircle } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +8,19 @@ import Inidalogo from '../asserts/images/Inida.png'; // Your logo
 import '../App.css'; // Ensure this import is present
 
 function Header({ onSidebarToggle, username }) {
+  const navigate = useNavigate();
+
+  // Function to handle sign out
+  const handleSignOut = () => {
+    // Remove tokens from localStorage and sessionStorage
+    localStorage.removeItem('Token');
+    sessionStorage.removeItem('Token');
+
+    navigate('/signup'); // Redirect to login or signup page after sign out
+  };
+
+
+
   return (
     <Navbar expand="lg" bg="light" variant="light" className="position-fixed w-100" style={{ zIndex: 1000, height: '80px' }}>
       <div className="container">
@@ -32,7 +45,7 @@ function Header({ onSidebarToggle, username }) {
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
-            <Dropdown.Item as={Link} to="/signup">Sign Out</Dropdown.Item>
+            <Dropdown.Item onClick={handleSignOut}>Sign Out</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
 

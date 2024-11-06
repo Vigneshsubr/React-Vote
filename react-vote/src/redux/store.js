@@ -5,6 +5,7 @@ import { voterApi } from "./services/voterApi";
 import { electionApi } from "./services/electionApi"; // Ensure correct case
 import { pollApi } from "./services/pollApi";
 import { candidateApi } from "./services/candidateApi";
+import { votecastApi } from "./services/votecastApi";
 
 
 
@@ -15,9 +16,10 @@ export const Store =configureStore({
         [voterApi.reducerPath]:voterApi.reducer,
         [electionApi.reducerPath]:electionApi.reducer,
         [pollApi.reducerPath]:pollApi.reducer,
-        [candidateApi.reducerPath]: candidateApi.reducer
+        [candidateApi.reducerPath]: candidateApi.reducer,
+        [votecastApi.reducerPath]: votecastApi.reducer
     
     },
     middleware:(getDefaultMiddleware)=>
-        getDefaultMiddleware({}).concat([userApi.middleware,voterApi.middleware,electionApi.middleware,pollApi.middleware,candidateApi.middleware])
+        getDefaultMiddleware({}).concat([userApi.middleware,voterApi.middleware,electionApi.middleware,pollApi.middleware,candidateApi.middleware,votecastApi.middleware])
 })

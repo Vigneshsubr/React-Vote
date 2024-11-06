@@ -42,6 +42,14 @@ export const electionApi = createApi({
             invalidatesTags: ['Election']
         }),
 
+        fetchPollsByElectionId: build.query({
+            query:(electionId)=>({
+                url:`elections/${electionId}/polls`,
+                method:"GET",
+            }),
+            invalidatesTags:['Election']
+        }),
+
         deleteElection: build.mutation({
             query: (id) => ({
                 url: `elections/${id}`,
@@ -56,5 +64,6 @@ export const {
     usePostElectionMutation,
     useGetElectionQuery,
     useGetSingleElectionQuery,
-    useDeleteElectionMutation
+    useDeleteElectionMutation,
+    useFetchPollsByElectionIdQuery
 } = electionApi;

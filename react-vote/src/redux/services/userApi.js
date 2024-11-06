@@ -33,7 +33,17 @@ export const userApi = createApi({
             invalidatesTags:['User']
         }),
 
+        addSignOutUser: build.mutation({
+            query:(logout)=>({
+                url:"auth/signout",
+                method:"POST",
+                body:logout
+
+            }),
+            invalidatesTags:['User']
+        }),
+
     })
 })
 
-export const {useAddSignUpUsersMutation,useAddLoginMutation} = userApi;
+export const {useAddSignUpUsersMutation,useAddLoginMutation,useAddSignOutUserMutation} = userApi;

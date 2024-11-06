@@ -23,35 +23,76 @@ const SignIn = () => {
         sessionStorage.removeItem('Name');
     }, []);
 
+    // const onSubmit = async (data) => {
+    //     try {
+    //         const result = await login(data);
+    //         console.log("API Response: ", result); // Log the entire API response to check the structure
+    
+    //         if (result?.data?.statusCode === 200) {
+    //             // Adjust to the correct structure
+    //             const token = result?.data?.data?.accessToken;
+    //             console.log("Token received: ", token); // Log the token to verify it's valid
+                
+    //             // Check if token exists and is a string before decoding
+    //             if (token && typeof token === 'string') {
+    //                 // Decode the token
+    //                 const decodedToken = jwtDecode(token);
+    //                 console.log("Decoded Token: ", decodedToken); // Log the decoded token
+    
+    //                 const name = decodedToken?.Name || "Guest"; // Extract name or fallback to 'Guest'
+    //                 console.log("Extracted Name: ", name); // Log the extracted name
+    
+    //                 // Store both token and name in sessionStorage
+    //                 sessionStorage.setItem('Token', token);
+    //                 sessionStorage.setItem('Name', name); // Store the extracted name
+    
+    //                 toast.success("Login successful!", { autoClose: 500 });
+    
+    //                 setTimeout(() => {
+    //                     navigate('/dashboard/vote');
+    //                 }, 1500);
+    //                 reset();
+    //             } else {
+    //                 throw new Error('Invalid token format or token is missing.');
+    //             }
+    //         } else {
+    //             const errorMessage = result.data.message || "Login failed. Please try again.";
+    //             toast.error(errorMessage, { autoClose: 1500 });
+    //         }
+    //     } catch (error) {
+    //         console.error("Error during login: ", error.message); // Log the error
+    //         toast.error(error.message || "An error occurred during submission. Please try again.", { autoClose: 1500 });
+    //     }
+    // };
+
     const onSubmit = async (data) => {
         try {
             const result = await login(data);
-            console.log("API Response: ", result); // Log the entire API response to check the structure
+            console.log("API Response: ", result); // Log the entire API response
     
             if (result?.data?.statusCode === 200) {
-                // Adjust to the correct structure
                 const token = result?.data?.data?.accessToken;
-                console.log("Token received: ", token); // Log the token to verify it's valid
-                
-                // Check if token exists and is a string before decoding
+                console.log("Token received: ", token); // Log the token
+    
                 if (token && typeof token === 'string') {
-                    // Decode the token
-                    const decodedToken = jwtDecode(token);
-                    console.log("Decoded Token: ", decodedToken); // Log the decoded token
-    
-                    const name = decodedToken?.Name || "Guest"; // Extract name or fallback to 'Guest'
-                    console.log("Extracted Name: ", name); // Log the extracted name
-    
-                    // Store both token and name in sessionStorage
                     sessionStorage.setItem('Token', token);
-                    sessionStorage.setItem('Name', name); // Store the extracted name
+                    console.log("Token stored in sessionStorage: ", sessionStorage.getItem('Token'));
     
-                    toast.success("Login successful!", { autoClose: 500 });
+                    try {
+                        const decodedToken = jwtDecode(token);
+                        console.log("Decoded Token: ", decodedToken);
+                        const name = decodedToken?.Name || "Guest";
+                        sessionStorage.setItem('Name', name);
+                        toast.success("Login successful!", { autoClose: 500 });
     
-                    setTimeout(() => {
-                        navigate('/dashboard/vote');
-                    }, 1500);
-                    reset();
+                        setTimeout(() => {
+                            navigate('/dashboard/elections');
+                        }, 1500);
+                        reset();
+                    } catch (decodeError) {
+                        console.error("Failed to decode token:", decodeError);
+                        toast.error("Invalid token received.");
+                    }
                 } else {
                     throw new Error('Invalid token format or token is missing.');
                 }
@@ -60,10 +101,11 @@ const SignIn = () => {
                 toast.error(errorMessage, { autoClose: 1500 });
             }
         } catch (error) {
-            console.error("Error during login: ", error.message); // Log the error
+            console.error("Error during login: ", error);
             toast.error(error.message || "An error occurred during submission. Please try again.", { autoClose: 1500 });
         }
     };
+    
     
 
     
