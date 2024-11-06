@@ -1,10 +1,11 @@
 import React from 'react';
 import { useFetchPollsByElectionIdQuery } from '../redux/services/electionApi';
-import CandidateList from '../pages/CandidateList';
+import { useNavigate, useParams } from 'react-router-dom';
 
-function PollList({ electionId }) {
+function PollList() {
+    const { electionId } = useParams();
     const { data: polls = [], isLoading, error } = useFetchPollsByElectionIdQuery(electionId);
-    const [selectedPoll, setSelectedPoll] = React.useState(null);
+    const navigate = useNavigate();
 
     if (isLoading) return <p>Loading Polls...</p>;
     if (error) return <p>Error loading polls</p>;
@@ -17,15 +18,13 @@ function PollList({ electionId }) {
                     <li
                         key={poll.id}
                         className="list-group-item"
-                        onClick={() => setSelectedPoll(poll.id)}
+                        onClick={() => navigate(`/candidates/${poll.id}/${electionId}`)}
                         style={{ cursor: 'pointer' }}
                     >
                         {poll.pollName}
                     </li>
                 ))}
             </ul>
-
-            {selectedPoll && <CandidateList pollId={selectedPoll} electionId={electionId} />}
         </div>
     );
 }

@@ -1,10 +1,10 @@
 import React from 'react';
 import { useGetElectionQuery } from '../redux/services/electionApi';
-import PollList from '../pages/PollList';
+import { useNavigate } from 'react-router-dom';
 
 function ElectionList() {
     const { data: elections = [], isLoading, error } = useGetElectionQuery();
-    const [selectedElection, setSelectedElection] = React.useState(null);
+    const navigate = useNavigate();
 
     if (isLoading) return <p>Loading Elections...</p>;
     if (error) return <p>Error loading elections</p>;
@@ -17,15 +17,13 @@ function ElectionList() {
                     <li
                         key={election.id}
                         className="list-group-item"
-                        onClick={() => setSelectedElection(election.id)}
+                        onClick={() => navigate(`/polls/${election.id}`)}
                         style={{ cursor: 'pointer' }}
                     >
                         {election.name}
                     </li>
                 ))}
             </ul>
-
-            {selectedElection && <PollList electionId={selectedElection} />}
         </div>
     );
 }

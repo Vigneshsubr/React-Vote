@@ -75,6 +75,10 @@ function App() {
 
         <Route path="create-election" element={<CreateElection />} />
         <Route path="/elections/:electionId/vote" element={<VoteForm />} />
+
+        <Route path="/" element={<ElectionList />} />
+                <Route path="/polls/:electionId" element={<PollList />} />
+                <Route path="/candidates/:pollId/:electionId" element={<CandidateList />} />
        
       </Routes>
     </Router>
