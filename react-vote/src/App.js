@@ -14,7 +14,7 @@ import DashboardLayout from './components/DashboardLayout';
 import HomePage from './pages/HomePage';
 // import VotersTab from './pages/VotersTab';
 import Vote from './pages/Vote';
-import CreateElection from './pages/CreateElection';
+//import CreateElection from './pages/CreateElection';
 import Election from './pages/Election';
 import Poll from './pages/Poll';
 import Candidate from './pages/Candidate';
@@ -64,21 +64,17 @@ function App() {
 
          {/* Election Workflow */}
          <Route path='dashboard/elections' element={<DashboardLayout />}>
-          {/* Display all elections */}
           <Route index element={<ElectionList />} />
-          {/* Show Polls under a selected Election */}
           <Route path=":electionId/polls" element={<PollList />} />
-          {/* Show Candidates under a selected Poll */}
           <Route path="poll/:pollId/candidates" element={<CandidateList />} />
+          
         </Route>
 
 
-        <Route path="create-election" element={<CreateElection />} />
+        {/* <Route path="create-election" element={<CreateElection />} /> */}
         <Route path="/elections/:electionId/vote" element={<VoteForm />} />
-
-        <Route path="/" element={<ElectionList />} />
-                <Route path="/polls/:electionId" element={<PollList />} />
-                <Route path="/candidates/:pollId/:electionId" element={<CandidateList />} />
+        <Route path="/polls/:electionId" element={<PollList />} />
+        <Route path="/candidates/:pollId/:electionId" element={<CandidateList />} />
        
       </Routes>
     </Router>
