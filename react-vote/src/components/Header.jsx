@@ -37,6 +37,8 @@ function Header({ onSidebarToggle, username }) {
         <Link to="/dashboard/election" className="ms-3 h6 mb-0 text-dark text-decoration-none">Election</Link>
         <Link to="/dashboard/candidate" className="ms-3 h6 mb-0 text-dark text-decoration-none">Candidate</Link>
         <Link to="/dashboard/poll" className="ms-3 h6 mb-0 text-dark text-decoration-none">Poll</Link>
+        <Link to="/dashboard/result" className="ms-3 h6 mb-0 text-dark text-decoration-none">Result</Link>
+
         <span className="ms-auto me-3 h6 mb-0">{username}</span>
 
         <Dropdown align="end">

@@ -23,9 +23,10 @@ import Candidate from './pages/Candidate';
 import ElectionList from './pages/ElectionList';  // List all elections
 import PollList from './pages/PollList';          // List polls under an election
 import CandidateList from './pages/CandidateList'; // List candidates under a poll
-import VoteForm from './pages/VoteForm';
 
-
+import PollResultsPage from './pages/PollResultsPage ';
+import CalculateResultsPage from './pages/CalculateResultsPage ';
+import Result from './pages/Result';
 
 
 function App() {
@@ -62,21 +63,32 @@ function App() {
           <Route path='candidate' element={<Candidate />} />
         </Route>
 
-         {/* Election Workflow */}
-         <Route path='dashboard/elections' element={<DashboardLayout />}>
+        {/* Election Workflow */}
+        <Route path='dashboard/elections' element={<DashboardLayout />}>
           <Route index element={<ElectionList />} />
-          <Route path=":electionId/polls" element={<PollList />} />
-          <Route path="poll/:pollId/candidates" element={<CandidateList />} />
-          
+          {/* <Route path=":electionId/polls" element={<PollList />} />
+          <Route path="poll/:pollId/candidates" element={<CandidateList />} /> */}
+
         </Route>
-
-
-        {/* <Route path="create-election" element={<CreateElection />} /> */}
-        <Route path="/elections/:electionId/vote" element={<VoteForm />} />
         <Route path="/polls/:electionId" element={<PollList />} />
         <Route path="/candidates/:pollId/:electionId" element={<CandidateList />} />
-       
+
+     
+        <Route path="/poll/results/:pollId" element={<PollResultsPage />} />
+        <Route path="/poll/calculate" element={<CalculateResultsPage />} />
+
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route path="result" element={<Result />} />
+          {/* Other routes */}
+        </Route>
+      
+
+
       </Routes>
+
+
+
+
     </Router>
   );
 }
