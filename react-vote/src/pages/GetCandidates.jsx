@@ -5,14 +5,14 @@ import { Icon } from '@iconify/react';
 
 const GetCandidates = ({ onUpdateCandidate, onViewCandidate }) => {
     const { data: candidatesData, error, isLoading, refetch } = useGetAllCandidateQuery();
-    const [deleteCandidate] = useDeleteCandidateMutation(); // Hook for delete mutation
+    const [deleteCandidate] = useDeleteCandidateMutation(); 
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [candidateIdToDelete, setCandidateIdToDelete] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const candidatesPerPage = 5;
 
-    // Pagination logic
+  
     const totalPages = candidatesData ? Math.ceil(candidatesData.length / candidatesPerPage) : 1;
     const indexOfLastCandidate = currentPage * candidatesPerPage;
     const indexOfFirstCandidate = indexOfLastCandidate - candidatesPerPage;
@@ -35,17 +35,17 @@ const GetCandidates = ({ onUpdateCandidate, onViewCandidate }) => {
     };
 
     const handleDelete = (candidateId) => {
-        setCandidateIdToDelete(candidateId); // Set the ID of the candidate to delete
-        setIsModalOpen(true); // Open the modal for confirmation
+        setCandidateIdToDelete(candidateId); 
+        setIsModalOpen(true); 
     };
 
     const confirmDelete = async () => {
         try {
-            await deleteCandidate(candidateIdToDelete).unwrap(); // Call the delete mutation
+            await deleteCandidate(candidateIdToDelete).unwrap(); 
             console.log(`Candidate with ID: ${candidateIdToDelete} deleted successfully`);
-            refetch(); // Refetch candidates to update the list
-            setIsModalOpen(false); // Close the modal
-            setCandidateIdToDelete(null); // Reset the candidate ID to delete
+            refetch(); 
+            setIsModalOpen(false);
+            setCandidateIdToDelete(null); 
         } catch (err) {
             console.error('Failed to delete candidate: ', err);
         }
@@ -75,8 +75,8 @@ const GetCandidates = ({ onUpdateCandidate, onViewCandidate }) => {
                         <th>Gender</th>
                         <th>Age</th>
                         <th>Address</th>
-                        <th>Poll Name</th> {/* Changed to Poll Name */}
-                        <th>Election Name</th> {/* Changed to Election Name */}
+                        <th>Poll Name</th>
+                        <th>Election Name</th> 
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -94,7 +94,7 @@ const GetCandidates = ({ onUpdateCandidate, onViewCandidate }) => {
                                             />
                                         ) : (
                                             <img
-                                                src="path/to/default/avatar.png" // Replace with the path to your default avatar image
+                                                src="path/to/default/avatar.png" 
                                                 alt="Default Avatar"
                                                 style={{ width: '40px', height: '40px', borderRadius: '50%' }}
                                             />
@@ -113,8 +113,8 @@ const GetCandidates = ({ onUpdateCandidate, onViewCandidate }) => {
                                 <td>{candidate.gender || '--'}</td>
                                 <td>{candidate.age || '--'}</td>
                                 <td>{candidate.address || '--'}</td>
-                                <td>{candidate.poll ? candidate.poll.pollName : '--'}</td> {/* Displaying Poll Name */}
-                                <td>{candidate.poll && candidate.poll.election ? candidate.poll.election.name : '--'}</td> {/* Displaying Election Name */}
+                                <td>{candidate.poll ? candidate.poll.pollName : '--'}</td> 
+                                <td>{candidate.poll && candidate.poll.election ? candidate.poll.election.name : '--'}</td> 
                                 <td>
                                     <button
                                         onClick={() => handleUpdate(candidate.id)}
@@ -139,7 +139,7 @@ const GetCandidates = ({ onUpdateCandidate, onViewCandidate }) => {
                 </tbody>
             </table>
 
-            {/* Pagination Controls */}
+           
             <div className="pagination-controls">
                 <button
                     onClick={handlePreviousPage}
@@ -158,11 +158,10 @@ const GetCandidates = ({ onUpdateCandidate, onViewCandidate }) => {
                 </button>
             </div>
 
-            {/* Confirmation Modal */}
             <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                onSave={confirmDelete} // Confirm deletion action
+                onSave={confirmDelete} 
                 title="Confirm Deletion"
             >
                 <p>Are you sure you want to delete this candidate?</p>

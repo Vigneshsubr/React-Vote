@@ -1,21 +1,21 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGetSingleUsersQuery } from '../redux/services/voterApi'; // Adjust this path as per your project structure
-import Label from '../components/Label'; // Import Label component
-import Input from '../components/Input'; // Import Input component
+import { useGetSingleUsersQuery } from '../redux/services/voterApi'; 
+import Label from '../components/Label'; 
+import Input from '../components/Input'; 
 
 const UserDetail = ({ id }) => {
   const { data: user, error, isLoading } = useGetSingleUsersQuery(id, {
     refetchOnMountOrArgChange: true,
   });
-  const navigate = useNavigate(); // For navigation
+  const navigate = useNavigate(); 
 
   const handleEdit = () => {
-    navigate(`/dashboard/updateusers/${id}`); // Navigate to the edit page for this user
+    navigate(`/dashboard/updateusers/${id}`);
   };
 
   const handleBack = () => {
-    navigate(-1); // Go back to the previous page
+    navigate(-1); 
   };
 
   if (isLoading) {
@@ -33,16 +33,14 @@ const UserDetail = ({ id }) => {
   }
 
   return (
-    <div className="container mt-5 ">
-      <div className="d-flex justify-content-between align-items-center mb-4 mt-5">
+    <div className="container mt-5">
+      <div className="d-flex justify-content-between align-items-center mb-4">
         <h4 className="fst-italic m-0">User Details</h4>
-       
       </div>
-      <div className="col-12 border-0 bg-light">
+      <div className="col-12 border-0 bs-body-color">
         <div className="p-4">
           <div className="d-flex justify-content-center align-items-start mb-4">
-            <div >
-             
+            <div>
               {user.profileImage && (
                 <img
                   src={`data:image/jpeg;base64,${user.profileImage}`}
@@ -59,119 +57,38 @@ const UserDetail = ({ id }) => {
               )}
             </div>
           </div>
-          <div className="row mb-3">
-            <div className="col-3">
-              <Label htmlFor="name" className="form-label"><strong>Name:</strong></Label>
+
+          {[
+            { label: 'Name', value: user.name, id: 'name' },
+            { label: 'Email', value: user.email, id: 'email' },
+            { label: 'Role', value: user.role, id: 'role' },
+            { label: 'Gender', value: user.gender, id: 'gender' },
+            { label: 'Address', value: user.address, id: 'address' },
+            { label: 'Age', value: user.age, id: 'age', type: 'number' },
+            { label: 'Created At', value: new Date(user.createdAt).toLocaleString(), id: 'createdAt' },
+            { label: 'Updated At', value: new Date(user.updatedAt).toLocaleString(), id: 'updatedAt' }
+          ].map(({ label, value, id, type = 'text' }) => (
+            <div className="row mb-3" key={id}>
+              <div className="col-3">
+                <Label htmlFor={id} className="form-label" style={{ color: 'white' }}>
+                  <strong>{label}:</strong>
+                </Label>
+              </div>
+              <div className="col-9">
+                <Input
+                  type={type}
+                  className="form-control"
+                  id={id}
+                  value={value}
+                  readOnly
+                />
+              </div>
             </div>
-            <div className="col-9">
-              <Input
-                type="text"
-                className="form-control"
-                id="name"
-                value={user.name}
-                readOnly
-              />
-            </div>
-          </div>
-          <div className="row mb-3">
-            <div className="col-3">
-              <Label htmlFor="email" className="form-label"><strong>Email:</strong></Label>
-            </div>
-            <div className="col-9">
-              <Input
-                type="email"
-                className="form-control"
-                id="email"
-                value={user.email}
-                readOnly
-              />
-            </div>
-          </div>
-          <div className="row mb-3">
-            <div className="col-3">
-              <Label htmlFor="role" className="form-label"><strong>Role:</strong></Label>
-            </div>
-            <div className="col-9">
-              <Input
-                type="text"
-                className="form-control"
-                id="role"
-                value={user.role}
-                readOnly
-              />
-            </div>
-          </div>
-          <div className="row mb-3">
-            <div className="col-3">
-              <Label htmlFor="gender" className="form-label"><strong>Gender:</strong></Label>
-            </div>
-            <div className="col-9">
-              <Input
-                type="text"
-                className="form-control"
-                id="gender"
-                value={user.gender}
-                readOnly
-              />
-            </div>
-          </div>
-          <div className="row mb-3">
-            <div className="col-3">
-              <Label htmlFor="address" className="form-label"><strong>Address:</strong></Label>
-            </div>
-            <div className="col-9">
-              <Input
-                type="text"
-                className="form-control"
-                id="address"
-                value={user.address}
-                readOnly
-              />
-            </div>
-          </div>
-          <div className="row mb-3">
-            <div className="col-3">
-              <Label htmlFor="age" className="form-label"><strong>Age:</strong></Label>
-            </div>
-            <div className="col-9">
-              <Input
-                type="number"
-                className="form-control"
-                id="age"
-                value={user.age}
-                readOnly
-              />
-            </div>
-          </div>
-          <div className="row mb-3">
-            <div className="col-3">
-              <Label htmlFor="createdAt" className="form-label"><strong>Created At:</strong></Label>
-            </div>
-            <div className="col-9">
-              <Input
-                type="text"
-                className="form-control"
-                id="createdAt"
-                value={new Date(user.createdAt).toLocaleString()}
-                readOnly
-              />
-            </div>
-          </div>
-          <div className="row mb-3">
-            <div className="col-3">
-              <Label htmlFor="updatedAt" className="form-label"><strong>Updated At:</strong></Label>
-            </div>
-            <div className="col-9">
-              <Input
-                type="text"
-                className="form-control"
-                id="updatedAt"
-                value={new Date(user.updatedAt).toLocaleString()}
-                readOnly
-              />
-            </div>
-            <button className="btn btn-secondary mt-4" onClick={handleBack}>Back</button>
-            <button className="btn btn-primary mt-2" onClick={handleEdit}>Edit</button>
+          ))}
+
+          <div className="d-flex justify-content-start mt-4">
+            <button className="btn btn-secondary me-2" onClick={handleBack}>Back</button>
+            <button className="btn btn-primary" onClick={handleEdit}>Edit</button>
           </div>
         </div>
       </div>

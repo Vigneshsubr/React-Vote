@@ -4,91 +4,46 @@ import './App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import SignUp from './pages/SignUp';
-import SignIn from './pages/Signin';
-// import GetVoters from './pages/GetVoters';
-// import CreateUser from './pages/CreateUser';
+import SignIn from './pages/SignIn';
 import UserDetail from './pages/UserDetail';
 import UpdateUser from './pages/UpdateUser';
-import Layout from './components/Layout';
 import DashboardLayout from './components/DashboardLayout';
 import HomePage from './pages/HomePage';
-// import VotersTab from './pages/VotersTab';
 import Vote from './pages/Vote';
-//import CreateElection from './pages/CreateElection';
 import Election from './pages/Election';
 import Poll from './pages/Poll';
 import Candidate from './pages/Candidate';
-
-// Import the new components for election workflow
-import ElectionList from './pages/ElectionList';  // List all elections
-import PollList from './pages/PollList';          // List polls under an election
-import CandidateList from './pages/CandidateList'; // List candidates under a poll
-
-import PollResultsPage from './pages/PollResultsPage ';
-import CalculateResultsPage from './pages/CalculateResultsPage ';
+import ElectionList from './pages/ElectionList';
+import PollList from './pages/PollList';
+import CandidateList from './pages/CandidateList';
 import Result from './pages/Result';
-
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Layout with Header (Navbar) included */}
-        <Route path='/' element={<Layout />}>
+        {/* Public Routes */}
+        <Route path="/">
           <Route index element={<HomePage />} />
-          <Route path='signup' element={<SignUp />} />
-          <Route path='signin' element={<SignIn />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route path="signin" element={<SignIn />} />
         </Route>
 
-        {/* Dashboard Layout with the VotersTab */}
-        <Route path='dashboard' element={<DashboardLayout />}>
-          {/* Voters page shows the VotersTab below the Navbar */}
-          <Route path='vote' element={<Vote />} />
+        {/* Dashboard Routes with Sidebar (DashboardLayout) */}
+        <Route path="dashboard" element={<DashboardLayout />}>
+          <Route index element={<HomePage />} /> {/* Optional homepage/dashboard overview */}
+          <Route path="vote" element={<Vote />} />
           <Route path="updateusers/:id" element={<UpdateUser />} />
           <Route path="userdetails/:id" element={<UserDetail />} />
-        </Route>
-
-        <Route path='dashboard' element={<DashboardLayout />}>
-          {/* Voters page shows the VotersTab below the Navbar */}
-          <Route path='election' element={<Election />} />
-        </Route>
-
-        <Route path='dashboard' element={<DashboardLayout />}>
-          {/* Voters page shows the VotersTab below the Navbar */}
-          <Route path='poll' element={<Poll />} />
-        </Route>
-
-        <Route path='dashboard' element={<DashboardLayout />}>
-          {/* Voters page shows the VotersTab below the Navbar */}
-          <Route path='candidate' element={<Candidate />} />
-        </Route>
-
-        {/* Election Workflow */}
-        <Route path='dashboard/elections' element={<DashboardLayout />}>
-          <Route index element={<ElectionList />} />
-          {/* <Route path=":electionId/polls" element={<PollList />} />
-          <Route path="poll/:pollId/candidates" element={<CandidateList />} /> */}
-
-        </Route>
-        <Route path="/polls/:electionId" element={<PollList />} />
-        <Route path="/candidates/:pollId/:electionId" element={<CandidateList />} />
-
-     
-        <Route path="/poll/results/:pollId" element={<PollResultsPage />} />
-        <Route path="/poll/calculate" element={<CalculateResultsPage />} />
-
-        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route path="election" element={<Election />} />
+          <Route path="poll" element={<Poll />} />
+          <Route path="candidate" element={<Candidate />} />
+          <Route path="elections" element={<ElectionList />} />
           <Route path="result" element={<Result />} />
-          {/* Other routes */}
         </Route>
-      
-
-
+        <Route path="polls/:electionId" element={<PollList />} />
+        <Route path="candidates/:pollId/:electionId" element={<CandidateList />} />
       </Routes>
-
-
-
-
     </Router>
   );
 }

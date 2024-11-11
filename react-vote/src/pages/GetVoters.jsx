@@ -2,26 +2,26 @@ import React, { useState } from 'react';
 import { useGetUsersQuery, useDeleteUserMutation } from '../redux/services/voterApi';
 //import { useNavigate } from 'react-router-dom';
 import Modal from '../components/Modal';
-import { Icon } from '@iconify/react'; // Import Icon from Iconify
+import { Icon } from '@iconify/react';
 
 const GetVoters = ({ onUpdateUser ,  onViewUser}) => {
-    // Fetch all users
+  
     const { data: usersData, error, isLoading, refetch } = useGetUsersQuery();
     const [deleteUser] = useDeleteUserMutation();
     //const navigate = useNavigate();
 
-    // Modal state
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [userIdToDelete, setUserIdToDelete] = useState(null);
 
-    // Pagination state
+
     const [currentPage, setCurrentPage] = useState(1);
     const usersPerPage = 5;
 
-    // Calculate total pages
+
     const totalPages = usersData ? Math.ceil(usersData.length / usersPerPage) : 1;
 
-    // Get the current page's users
+
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
     const currentUsers = usersData ? usersData.slice(indexOfFirstUser, indexOfLastUser) : [];
@@ -38,20 +38,9 @@ const GetVoters = ({ onUpdateUser ,  onViewUser}) => {
         }
     };
 
-    // const convertToBase64 = (buffer) => {
-    //     let binary = '';
-    //     let bytes = new Uint8Array(buffer);
-    //     bytes.forEach((byte) => (binary += String.fromCharCode(byte)));
-    //     return window.btoa(binary);
-    // };
-
-    // const handleUpdate = (userId) => {
-    //     navigate(`/dashboard/updateusers/${userId}`);
-    //     console.log(`Update user with ID: ${userId}`);
-    // };
 
     const handleUpdate = (userId) => {
-        onUpdateUser(userId); // Use the callback to switch tabs and pass userId
+        onUpdateUser(userId);
     };
 
     const handleDelete = (userId) => {
@@ -76,7 +65,7 @@ const GetVoters = ({ onUpdateUser ,  onViewUser}) => {
     // };
 
     const handleNavigateToUserDetail = (userId) => {
-        onViewUser(userId); // **Call the onViewUser callback when clicking on name** (Modified)
+        onViewUser(userId); 
     };
     
     
@@ -90,10 +79,10 @@ const GetVoters = ({ onUpdateUser ,  onViewUser}) => {
     }
 
     return (
-        <div className="container mt-5 ">
+        <div className=" container mt-5 ">
             <h4 class="fst-italic mb-4">Voter List</h4>
-            <table className="table table-striped">
-                <thead>
+            <table className="table table-striped table-hover">
+                <thead className='table-primary'>
                     <tr>
                         <th>ID</th>
                         <th>Avatar</th>
@@ -120,7 +109,7 @@ const GetVoters = ({ onUpdateUser ,  onViewUser}) => {
                                           width: '40px',
                                           height: '40px',
                                           objectFit: 'cover',
-                                          border: '3px solid #007BFF', // Border color
+                                          border: '3px solid #007BFF', 
                                           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                                         }}
                                       />
@@ -145,13 +134,13 @@ const GetVoters = ({ onUpdateUser ,  onViewUser}) => {
                                         onClick={() => handleUpdate(user.id)}
                                         className="btn btn-warning btn-sm mx-1"
                                     >
-                                        <Icon icon="mdi:pencil" /> {/* Update Icon */}
+                                        <Icon icon="mdi:pencil" />
                                     </button>
                                     <button
                                         onClick={() => handleDelete(user.id)}
                                         className="btn btn-danger btn-sm mx-1"
                                     >
-                                        <Icon icon="mdi:delete" /> {/* Delete Icon */}
+                                        <Icon icon="mdi:delete" /> 
                                     </button>
                                 </td>
                             </tr>
@@ -164,7 +153,7 @@ const GetVoters = ({ onUpdateUser ,  onViewUser}) => {
                 </tbody>
             </table>
 
-            {/* Pagination Controls */}
+          
             <div className="pagination-controls">
                 <button 
                     onClick={handlePreviousPage}
@@ -183,7 +172,7 @@ const GetVoters = ({ onUpdateUser ,  onViewUser}) => {
                 </button>
             </div>
 
-            {/* Confirmation Modal */}
+   
             <Modal 
                 isOpen={isModalOpen} 
                 onClose={() => setIsModalOpen(false)} 

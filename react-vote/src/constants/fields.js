@@ -35,7 +35,7 @@ export const signupSchema = yup.object().shape({
     .required('Name is required')
     .min(3, 'Name must be at least 3 characters long')
     .max(20, 'Name must be less than 20 characters'),
-  
+
   email: yup
     .string()
     .email('Must be a valid email')
@@ -55,7 +55,7 @@ export const signupSchema = yup.object().shape({
     .oneOf([yup.ref('password'), null], 'Passwords must match')
     .required('Confirm Password is required'),
 
-    gender: yup
+  gender: yup
     .string()
     .oneOf(['Male', 'Female', 'Other'], 'Select a valid gender') // Capitalized values
     .required('Gender is required'),

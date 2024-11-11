@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Tab, Nav, Row, Col } from 'react-bootstrap';
-import CreateCandidate from './CreateCandidate'; // Component to create a candidate
-import GetCandidates from './GetCandidates';   // GetCandidates component
+import CreateCandidate from './CreateCandidate'; 
+import GetCandidates from './GetCandidates';   
 
 const CandidateTab = () => {
   const [activeTab, setActiveTab] = useState('createCandidate');
 
   const handleUpdateCandidate = (candidateId) => {
-    setActiveTab('updateCandidate'); // Switch to the 'updateCandidate' tab
-    // You can pass the candidateId to a state if needed for updating candidate
+    setActiveTab('updateCandidate'); 
+    
   };
 
   const handleViewCandidate = (candidateId) => {
@@ -34,12 +34,12 @@ const CandidateTab = () => {
         <Col sm={12}>
           <Tab.Content>
             <Tab.Pane eventKey="createCandidate">
-              <CreateCandidate /> {/* Create Candidate Form */}
+              <CreateCandidate />
             </Tab.Pane>
             <Tab.Pane eventKey="viewCandidates">
               <GetCandidates 
-                onUpdateCandidate={handleUpdateCandidate}  // Pass update handler
-                onViewCandidate={handleViewCandidate}      // Pass view handler
+                onUpdateCandidate={handleUpdateCandidate}  
+                onViewCandidate={handleViewCandidate}    
               /> 
             </Tab.Pane>
             {/* <Tab.Pane eventKey="updateCandidate">

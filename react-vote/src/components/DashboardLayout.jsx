@@ -23,7 +23,7 @@ const DashboardLayout = () => {
 
       {/* Main content below the header */}
       <div className="d-flex" style={{ flexGrow: 1, overflow: 'hidden', marginTop: '80px' }}>
-        <main className="flex-grow-1 p-3" style={{ overflowY: 'auto' }}>
+        <main className="flex-grow-1 " style={{ overflowY: 'auto' }}>
           <Outlet />
         </main>
       </div>

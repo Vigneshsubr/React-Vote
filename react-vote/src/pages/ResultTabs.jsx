@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tab, Nav, Row, Col } from 'react-bootstrap';
-import CalculateResultsPage from '../pages/CalculateResultsPage '; // Corrected import path
-import PollResultsPage from '../pages/PollResultsPage '; // Corrected import path
+import CalculateResultsPage from '../pages/CalculateResultsPage ';
+import PollResultsPage from '../pages/PollResultsPage '; 
 
 const ResultTabs = () => {
   const [activeTab, setActiveTab] = useState('calculateResults');

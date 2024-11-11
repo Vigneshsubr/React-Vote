@@ -2,7 +2,7 @@ import React from 'react';
 
 const FormField = ({ field, register, errors }) => {
     return (
-        <div className="form-group mb-3">
+        <div className="form-group mb-2">
             <label htmlFor={field.name} className="form-label">
                 <strong>{field.label}</strong>
             </label>
@@ -37,7 +37,7 @@ const FormField = ({ field, register, errors }) => {
             )}
             {/* Display validation errors */}
             {errors && errors[field.name] && (
-                <p className="text-danger mt-2">{errors[field.name].message}</p>
+                <p className="text-danger mt-2 mb-0">{errors[field.name].message}</p>
             )}
         </div>
     );

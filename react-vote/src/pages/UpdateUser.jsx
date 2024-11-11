@@ -91,11 +91,11 @@ const UpdateUser = ({ id }) => {
         <h4 className="fst-italic m-0">Update User</h4>
       </div>
 
-      <div className="bg-light p-4 border rounded">
+      <div className="bs-body-color  p-4 border rounded ">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-          {/* Name */}
+        
           <div className="mb-3">
-            <label htmlFor="name" className="form-label"><strong>Name</strong></label>
+            <label htmlFor="name" className="form-label text-dark fw-bold">Name</label>
             <input
               type="text"
               className="form-control"
@@ -107,9 +107,8 @@ const UpdateUser = ({ id }) => {
             />
           </div>
 
-          {/* Email */}
           <div className="mb-3">
-            <label htmlFor="email" className="form-label"><strong>Email</strong></label>
+            <label htmlFor="email" className="form-label text-dark fw-bold">Email</label>
             <input
               type="email"
               className="form-control"
@@ -121,9 +120,8 @@ const UpdateUser = ({ id }) => {
             />
           </div>
 
-          {/* Age */}
           <div className="mb-3">
-            <label htmlFor="age" className="form-label"><strong>Age</strong></label>
+            <label htmlFor="age" className="form-label text-dark fw-bold">Age</label>
             <input
               type="number"
               className="form-control"
@@ -135,9 +133,8 @@ const UpdateUser = ({ id }) => {
             />
           </div>
 
-          {/* Address */}
           <div className="mb-3">
-            <label htmlFor="address" className="form-label"><strong>Address</strong></label>
+            <label htmlFor="address" className="form-label text-dark fw-bold">Address</label>
             <input
               type="text"
               className="form-control"
@@ -149,9 +146,8 @@ const UpdateUser = ({ id }) => {
             />
           </div>
 
-          {/* Gender */}
           <div className="mb-3">
-            <label htmlFor="gender" className="form-label"><strong>Gender</strong></label>
+            <label htmlFor="gender" className="form-label text-dark fw-bold">Gender</label>
             <select
               className="form-select"
               id="gender"
@@ -167,9 +163,8 @@ const UpdateUser = ({ id }) => {
             </select>
           </div>
 
-          {/* Profile Image */}
           <div className="mb-3">
-            <label htmlFor="profileImage" className="form-label"><strong>Profile Image</strong></label>
+            <label htmlFor="profileImage" className="form-label text-dark fw-bold">Profile Image</label>
             <input
               type="file"
               className="form-control"
@@ -180,7 +175,6 @@ const UpdateUser = ({ id }) => {
             />
           </div>
 
-          {/* Submit Button */}
           <div className="d-grid">
             <button type="submit" className="btn btn-primary" disabled={isUpdating}>
               {isUpdating ? <div className="spinner-border spinner-border-sm" role="status"><span className="visually-hidden">Updating...</span></div> : 'Update User'}

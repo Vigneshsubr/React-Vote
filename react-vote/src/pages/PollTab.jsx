@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Tab, Nav, Row, Col } from 'react-bootstrap';
-import CreatePoll from './CreatePoll'; // Component to create a poll
+import CreatePoll from './CreatePoll'; 
 
 const PollTab = () => {
   const [activeTab, setActiveTab] = useState('createPoll');
@@ -11,7 +11,7 @@ const PollTab = () => {
         <Col sm={12}>
           <Nav variant="tabs">
             <Nav.Item>
-              <Nav.Link eventKey="createPoll">Create Poll</Nav.Link> {/* Only Create Poll Tab */}
+              <Nav.Link eventKey="createPoll">Create Poll</Nav.Link> 
             </Nav.Item>
           </Nav>
         </Col>

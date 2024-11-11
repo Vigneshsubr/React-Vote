@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { usePostPollMutation } from '../redux/services/pollApi'; // Adjust the import path
+import { usePostPollMutation } from '../redux/services/pollApi'; 
 import { useGetElectionQuery } from '../redux/services/electionApi';
-import Label from '../components/Label'; // Reuse Label component
-import Input from '../components/Input'; // Reuse Input component
+import Label from '../components/Label'; 
+import Input from '../components/Input'; 
 
 const CreatePoll = () => {
   const [pollName, setPollName] = useState('');
@@ -29,12 +29,12 @@ const CreatePoll = () => {
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h4 className="fst-italic">Create New Poll</h4>
       </div>
-      <div className="col-12 border-0 bg-light">
+      <div className="col-12 border-0 bs-body-color">
         <div className="p-4">
           <form onSubmit={handleSubmit}>
             <div className="row mb-3">
               <div className="col-3">
-                <Label htmlFor="pollName" className="form-label">
+                <Label htmlFor="pollName" className="form-label" style={{ color: 'white' }}>
                   <strong>Poll Name:</strong>
                 </Label>
               </div>
@@ -46,13 +46,14 @@ const CreatePoll = () => {
                   value={pollName}
                   onChange={(e) => setPollName(e.target.value)}
                   required
+                  style={{ color: 'black' }}
                 />
               </div>
             </div>
 
             <div className="row mb-3">
               <div className="col-3">
-                <Label htmlFor="electionId" className="form-label">
+                <Label htmlFor="electionId" className="form-label" style={{ color: 'white' }}>
                   <strong>Election:</strong>
                 </Label>
               </div>
@@ -63,6 +64,7 @@ const CreatePoll = () => {
                   value={electionId}
                   onChange={(e) => setElectionId(e.target.value)}
                   required
+                  style={{ color: 'black' }}
                 >
                   <option value="" disabled>Select an Election</option>
                   {isElectionsLoading ? (
@@ -72,7 +74,7 @@ const CreatePoll = () => {
                   ) : (
                     elections.map((election) => (
                       <option key={election.id} value={election.id}>
-                        {election.name}  {/* Assuming election has a 'name' property */}
+                        {election.name} 
                       </option>
                     ))
                   )}
