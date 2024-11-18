@@ -25,12 +25,12 @@ const Result = () => {
           right: 0,
           bottom: 0,
           backgroundColor: 'rgba(0, 0, 0, 0.4)', // Dark overlay for a consistent look
-          zIndex: 1,
+     
         }}
       ></div>
 
       {/* Content area */}
-      <div style={{ position: 'relative', zIndex: 2, color: 'white', padding: '20px' }}>
+      <div style={{ position: 'relative', color: 'white', padding: '20px' }}>
         <h3 className="fst-italic mb-4">Manage Results</h3>
         <ResultTabs />
       </div>

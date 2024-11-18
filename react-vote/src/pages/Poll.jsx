@@ -9,14 +9,17 @@ const Poll = () => {
       style={{
         position: 'relative',
         minHeight: '100vh',
+        height: '100%', // Ensure full viewport height
+        margin: 0, // Reset margin
+        padding: 0, // Reset padding
         overflow: 'hidden',
-        backgroundImage: `url(${electronic})`,
+        backgroundImage: `url(${electronic})`, // Correct the template literal syntax
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
       }}
     >
-      <div
+      {/* <div
         style={{
           position: 'absolute',
           top: 0,
@@ -26,9 +29,9 @@ const Poll = () => {
           backgroundColor: 'rgba(0, 0, 0, 0.4)', // Add a dark overlay for blur effect
           zIndex: 1,
         }}
-      ></div>
+      ></div> */}
 
-      <div style={{ position: 'relative', zIndex: 2, color: 'white', padding: '20px' }}>
+      <div style={{ position: 'relative', color: 'white',padding: '10px'}}>
         <h3 className="fst-italic mb-4">Manage Polls</h3>
         <PollTab />
       </div>

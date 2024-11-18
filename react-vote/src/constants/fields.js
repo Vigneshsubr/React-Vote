@@ -60,13 +60,14 @@ export const signupSchema = yup.object().shape({
     .oneOf(['Male', 'Female', 'Other'], 'Select a valid gender') // Capitalized values
     .required('Gender is required'),
 
-  age: yup
+    age: yup
     .number()
+    .transform((value, originalValue) => (originalValue.trim() === "" ? undefined : value))
     .required('Age is required')
     .positive('Age must be a positive number')
     .integer('Age must be an integer')
     .min(18, 'You must be at least 18 years old'),
-
+  
   address: yup
     .string()
     .required('Address is required'),

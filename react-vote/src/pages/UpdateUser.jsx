@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useParams } from 'react-router-dom';
 import { useGetSingleUsersQuery, useUpdateUsersMutation } from '../redux/services/voterApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const UpdateUser = ({ id }) => {
+const UpdateUser = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const { data: user, isLoading, error } = useGetSingleUsersQuery(id);
   const [updateUsers, { isLoading: isUpdating }] = useUpdateUsersMutation();
 

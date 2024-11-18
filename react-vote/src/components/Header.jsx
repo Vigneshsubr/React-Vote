@@ -1,48 +1,73 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Navbar, Dropdown } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Inidalogo from '../asserts/images/Inida.png';
-import '../App.css';
+import { Dropdown } from "react-bootstrap"; // Importing necessary components from React Bootstrap
 
-function Header({ onSidebarToggle, username }) {
+const Header = ({ username }) => {
+  //const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
-  const initial = username ? username.charAt(0).toUpperCase() : ''; // Get the first letter of the username
+  const firstLetter = username.charAt(0).toUpperCase();
 
+  // Handle sign out and redirect to signup page
   const handleSignOut = () => {
-    localStorage.removeItem('Token');
-    sessionStorage.removeItem('Token');
-    navigate('/signup');
+    localStorage.removeItem("Token");
+    sessionStorage.removeItem("Token");
+    navigate("/signup");
   };
 
   return (
-    <Navbar expand="lg" bg="light" variant="light" className="position-fixed w-100" style={{ zIndex: 1000, height: '80px' }}>
-      <div className="container-fluid p-4">
-        <Navbar.Brand as={Link} to="/" className="text-decoration-none">
-          <img src={Inidalogo} alt="Logo" style={{ width: '50px', height: '50px' }} />
-          <span className="ms-3 h5 mb-0">VOTEINDIA</span>
-        </Navbar.Brand>
+    <div
+      className="d-flex align-items-center justify-content-between px-3 py-3 text-dark shadow-sm"
+      style={{
+        width: "calc(100% - 220px)", // Adjust width for sidebar (assuming sidebar width is 220px)
+        backgroundColor: "#F0F0F0",
+      }}
+    >
+      {/* Left side content */}
+      <div className="d-flex align-items-center">
+        <h5 className="mb-0" style={{ fontSize: "18px" }}>
+          Dashboard
+        </h5>
+      </div>
 
-        <Link to="/dashboard/vote" className="ms-3 h6 mb-0 text-dark text-decoration-none">Voters</Link>
-        <Link to="/dashboard/election" className="ms-3 h6 mb-0 text-dark text-decoration-none">Election</Link>
-        <Link to="/dashboard/candidate" className="ms-3 h6 mb-0 text-dark text-decoration-none">Candidate</Link>
-        <Link to="/dashboard/poll" className="ms-3 h6 mb-0 text-dark text-decoration-none">Poll</Link>
-        <Link to="/dashboard/result" className="ms-3 h6 mb-0 text-dark text-decoration-none">Result</Link>
-
-        <span className="ms-auto me-3 h6 mb-0">{username}</span>
-
+      {/* Right side content */}
+      <div className="d-flex align-items-center">
+        <span className="fw-bold" style={{ fontSize: "16px" }}>
+          {username}
+        </span>
+        {/* React Bootstrap Dropdown */}
         <Dropdown align="end">
-          <Dropdown.Toggle variant="link" id="profile-dropdown" bsPrefix="custom-toggle"  className="text-dark p-0" style={{ borderRadius: '60%', width: '30px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#ddd', color: '#333', fontSize: '20px', fontWeight: 'bold', textDecoration:'None'}}>
-            {initial}
+          <Dropdown.Toggle
+            className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center ms-2"
+             bsPrefix="custom-toggle"
+            style={{
+              width: "30px", // Reduced circle size
+              height: "30px",
+              fontSize: "19px", // Reduced font size for letter
+              cursor: "pointer",
+            }}
+            id="dropdown-custom-components"
+          >
+            {firstLetter}
           </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item as={Link} to="/profile">Profile</Dropdown.Item>
-            <Dropdown.Item onClick={handleSignOut}>Sign Out</Dropdown.Item>
+
+          <Dropdown.Menu
+            style={{
+              borderRadius: "5px",
+              boxShadow: "0 0 5px rgba(0,0,0,0.15)",
+              backgroundColor: "white", // Added background to dropdown
+            }}
+          >
+            <Dropdown.Item as={Link} to="/profile">
+              Profile
+            </Dropdown.Item>
+            <Dropdown.Item onClick={handleSignOut}>
+              Sign Out
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>
-    </Navbar>
+    </div>
   );
-}
+};
 
 export default Header;

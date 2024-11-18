@@ -1,31 +1,60 @@
-import React, { useState, useEffect } from 'react';
-import Header from './Header'; // Header for the dashboard
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Outlet } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
+import { Outlet } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const DashboardLayout = () => {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
-    // Get the name from sessionStorage
-    const storedName = sessionStorage.getItem('Name');
-    if (storedName) {
-      setUsername(storedName); // Set the username from sessionStorage
-    } else {
-      setUsername("Guest"); // Fallback to 'Guest' if no name is found
-    }
+    const storedName = sessionStorage.getItem("Name");
+    setUsername(storedName || "Guest");
   }, []);
 
   return (
-    <div className="d-flex flex-column" style={{ minHeight: '100vh' }}>
-      {/* Header with dynamic username */}
-      <Header username={username} /> 
+    <div className="d-flex flex-row container-fluid p-0 vh-100">
+      {/* Sidebar */}
+      <div
+        className="position-fixed vh-100"
+        style={{
+          width: "220px", // Fixed width for the sidebar
+          backgroundColor: "#292a2c",
+          zIndex: 1,
+        }}
+      >
+        <Sidebar />
+      </div>
 
-      {/* Main content below the header */}
-      <div className="d-flex" style={{ flexGrow: 1, overflow: 'hidden', marginTop: '80px' }}>
-        <main className="flex-grow-1 " style={{ overflowY: 'auto' }}>
+      {/* Main Content */}
+      <div
+        className="flex-grow-1"
+        style={{
+          marginLeft: "220px", // Align content to start after the sidebar
+        }}
+      >
+        {/* Header */}
+        <div
+          className="position-fixed w-100"
+          style={{
+            height: "56px", // Fixed height for the header
+            backgroundColor: "#F0F0F0",
+            zIndex: 2,
+            top: 0,
+          }}
+        >
+          <Header username={username} />
+        </div>
+
+        {/* Page Content */}
+        <div
+          className="content"
+          style={{
+            marginTop: "56px", // Align content to start below the header
+          }}
+        >
           <Outlet />
-        </main>
+        </div>
       </div>
     </div>
   );

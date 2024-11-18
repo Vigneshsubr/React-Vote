@@ -1,3 +1,4 @@
+// App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
@@ -17,6 +18,7 @@ import ElectionList from './pages/ElectionList';
 import PollList from './pages/PollList';
 import CandidateList from './pages/CandidateList';
 import Result from './pages/Result';
+import GetVoters from './pages/GetVoters';  // Import GetVoters here
 
 function App() {
   return (
@@ -33,6 +35,7 @@ function App() {
         <Route path="dashboard" element={<DashboardLayout />}>
           <Route index element={<HomePage />} /> {/* Optional homepage/dashboard overview */}
           <Route path="vote" element={<Vote />} />
+          <Route path="voters" element={<GetVoters />} /> 
           <Route path="updateusers/:id" element={<UpdateUser />} />
           <Route path="userdetails/:id" element={<UserDetail />} />
           <Route path="election" element={<Election />} />
@@ -40,9 +43,14 @@ function App() {
           <Route path="candidate" element={<Candidate />} />
           <Route path="elections" element={<ElectionList />} />
           <Route path="result" element={<Result />} />
+          <Route path="polls/:electionId" element={<PollList />} />
+          <Route path="candidates/:pollId/:electionId" element={<CandidateList />} />
+          
+          {/* Use GetVoters here as a standalone page */}
+           {/* The new route for GetVoters */}
+           <Route path="/dashboard/userdetails/:id" element={<UserDetail />} />
+           <Route path="/dashboard/updateusers/:id" element={<UpdateUser />} />
         </Route>
-        <Route path="polls/:electionId" element={<PollList />} />
-        <Route path="candidates/:pollId/:electionId" element={<CandidateList />} />
       </Routes>
     </Router>
   );

@@ -4,10 +4,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { useAddSignUpUsersMutation } from "../redux/services/userApi";
 import { useNavigate } from "react-router-dom";
-import { signupSchema, signUpfields } from "../constants/fields"; 
+import { signupSchema, signUpfields } from "../constants/fields";
 import { yupResolver } from '@hookform/resolvers/yup';
-import FormField from "../components/FormField"; 
-import vote from "../asserts/images/vote.jpg"; // You can replace this with another image if desired
+import FormField from "../components/FormField";
+import vote from "../asserts/images/handsign1.jpg"; // You can replace this with another image if desired
 
 const SignUp = () => {
     const [signup] = useAddSignUpUsersMutation();
@@ -23,8 +23,8 @@ const SignUp = () => {
             const { confirmPassword, ...formData } = data;
             await signup(formData).unwrap();
             toast.success("SignUp done Successfully", {
-                autoClose: 1000, // Show toast for 1.5 seconds
-                onClose: () => navigate('/signin') // Navigate after toast is closed
+                autoClose: 1000,
+                onClose: () => navigate('/signin')
             });
             reset();
         } catch (error) {
@@ -34,7 +34,6 @@ const SignUp = () => {
         }
     };
 
-    // Handle Next and Previous buttons
     const handleNext = () => {
         if (step < 3) {
             setStep(step + 1);
@@ -47,35 +46,48 @@ const SignUp = () => {
         }
     };
 
-    // Divide the fields into three steps (2 fields per step)
     const stepFields = [
-        signUpfields.slice(0, 2),   // Step 1 - First two fields
-        signUpfields.slice(2, 4),   // Step 2 - Next two fields
-        signUpfields.slice(4)       // Step 3 - Remaining fields
+        signUpfields.slice(0, 2),
+        signUpfields.slice(2, 4),
+        signUpfields.slice(4)
     ];
 
     return (
-        <div className="d-flex justify-content-center align-items-center vh-100" style={{ 
-            backgroundImage: `url(${vote})`, 
-            backgroundSize: 'cover', 
-            backgroundPosition: 'center', 
-            backgroundRepeat: 'no-repeat',
-            overflow: 'hidden' 
-        }}>
+        <div 
+            className="d-flex justify-content-end align-items-center vh-100 position-relative" 
+            style={{
+                backgroundImage: `url(${vote})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                overflow: 'hidden'
+            }}
+        >
+            <div className="position-absolute w-100 h-100" 
+                style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)', top: 0, left: 0, zIndex: 1 }}
+            ></div>
+
             <ToastContainer />
-            <div className="card p-3 shadow" style={{ maxWidth: '450px', width: '100%', backgroundColor: 'rgba(255, 255, 255, 0.9)' }}>
+
+            <div 
+                className="card p-3 me-5 shadow position-relative" 
+                style={{ 
+                    maxWidth: '350px', 
+                    width: '100%', 
+                    backgroundColor: 'rgba(255, 255, 255, 0.9)', 
+                    zIndex: 2
+                }}
+            >
                 <h4 className="text-center mb-3">Sign Up</h4>
 
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-fields mb-2">
-                        {/* Stepper navigation */}
                         <div className="stepper">
                             <div className="step" style={{ backgroundColor: step === 1 ? "#007bff" : "#e9ecef" }}></div>
                             <div className="step" style={{ backgroundColor: step === 2 ? "#007bff" : "#e9ecef" }}></div>
                             <div className="step" style={{ backgroundColor: step === 3 ? "#007bff" : "#e9ecef" }}></div>
                         </div>
 
-                        {/* Render fields based on the current step */}
                         {stepFields[step - 1].map((field, index) => (
                             <FormField
                                 key={index}
@@ -85,7 +97,6 @@ const SignUp = () => {
                             />
                         ))}
 
-                        {/* Step 1 - Role Selection */}
                         {step === 1 && (
                             <div className="form-group mb-3">
                                 <label htmlFor="role" className="form-label">Select Role</label>
@@ -103,7 +114,6 @@ const SignUp = () => {
                             </div>
                         )}
 
-                        {/* Terms and conditions - only on last step */}
                         {step === 3 && (
                             <div className="form-group mb-3 mt-4">
                                 <div className="form-check">
@@ -124,7 +134,15 @@ const SignUp = () => {
                                 Previous
                             </button>
                         )}
-                        {step < 3 ? (
+                        {step === 1 ? (
+                            <button 
+                                type="button" 
+                                className="btn btn-primary ms-auto" 
+                                onClick={handleNext}
+                            >
+                                Next
+                            </button>
+                        ) : step < 3 ? (
                             <button type="button" className="btn btn-primary" onClick={handleNext}>
                                 Next
                             </button>
@@ -135,7 +153,6 @@ const SignUp = () => {
                         )}
                     </div>
 
-                    {/* Redirect to Sign In */}
                     <div className="text-center">
                         <small className="text-muted">
                             Already have an account?

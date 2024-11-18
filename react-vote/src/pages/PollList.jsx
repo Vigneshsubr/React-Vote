@@ -18,7 +18,7 @@ function PollList() {
                     <li
                         key={poll.id}
                         className="list-group-item"
-                        onClick={() => navigate(`/candidates/${poll.id}/${electionId}`)}
+                        onClick={() => navigate(`/dashboard/candidates/${poll.id}/${electionId}`)}
                         style={{ cursor: 'pointer' }}
                     >
                         {poll.pollName}
