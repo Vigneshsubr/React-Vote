@@ -59,15 +59,15 @@ const CreateUser = () => {
 
   return (
     <div className="container mt-5">
-      <div className="d-flex align-items-center mb-4">
+      <div className="d-flex align-items-center mb-4 ">
         <FontAwesomeIcon
           icon={faArrowLeft}
-          className="me-3"
+          className="me-3 mt-4"
           size="lg"
           style={{ cursor: 'pointer', color: 'black' }}
           onClick={() => window.history.back()} 
         />
-        <h4 className="fst-italic mb-0">Create User</h4>
+        <h4 className="fst-italic mb-0 mt-4">Create User</h4>
       </div>
       
       <div className="bs-body-color p-4 border rounded">
@@ -190,7 +190,7 @@ const CreateUser = () => {
 
           <div className="row mb-3">
             <div className="col-sm-10 offset-sm-2">
-              <button type="submit" className="btn btn-primary" disabled={isLoading}>
+              <button type="submit" className="btn btn-primary " disabled={isLoading}>
                 {isLoading ? 'Creating...' : 'Create User'}
               </button>
             </div>

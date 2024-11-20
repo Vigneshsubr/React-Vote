@@ -19,6 +19,8 @@ import PollList from './pages/PollList';
 import CandidateList from './pages/CandidateList';
 import Result from './pages/Result';
 import GetVoters from './pages/GetVoters';  // Import GetVoters here
+import ElectionDashboard from './pages/ElectionDashboard';
+import CreateUser from './pages/CreateUser';
 
 function App() {
   return (
@@ -46,10 +48,13 @@ function App() {
           <Route path="polls/:electionId" element={<PollList />} />
           <Route path="candidates/:pollId/:electionId" element={<CandidateList />} />
           
+
           {/* Use GetVoters here as a standalone page */}
            {/* The new route for GetVoters */}
            <Route path="/dashboard/userdetails/:id" element={<UserDetail />} />
            <Route path="/dashboard/updateusers/:id" element={<UpdateUser />} />
+           <Route path='/dashboard/createuser' element={<CreateUser/>}/>
+           <Route path="/dashboard/pichart" element={<ElectionDashboard/>}/>
         </Route>
       </Routes>
     </Router>

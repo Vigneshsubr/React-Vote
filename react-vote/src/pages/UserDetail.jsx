@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetSingleUsersQuery } from '../redux/services/voterApi';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import Label from '../components/Label';
 import Input from '../components/Input';
 
@@ -19,6 +21,10 @@ const UserDetail = () => {
     navigate(-1);
   };
 
+  const handleCreate = () => {
+    navigate('/dashboard/createuser'); // Replace with your "Create User" route
+  };
+
   if (isLoading) {
     return (
       <div className="text-center mt-5">
@@ -35,9 +41,26 @@ const UserDetail = () => {
 
   return (
     <div className="container mt-2" style={{ backgroundColor: '#f8f9fa', padding: '20px', borderRadius: '8px' }}>
+      {/* Row for both Create User Button and User Details */}
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h4 className="fst-italic m-0">User Details</h4>
+        {/* User Details Title */}
+        <div className="d-flex align-items-center">
+          <FontAwesomeIcon
+            icon={faArrowLeft}
+            className="me-2"
+            size="lg"
+            style={{ cursor: 'pointer', color: 'black' }}
+            onClick={handleBack}
+          />
+          <h4 className="fst-italic me-2">User Details</h4>
+        </div>
+
+        {/* Create User Button on the Right */}
+        <button className="btn btn-primary" onClick={handleCreate}>
+          Create User
+        </button>
       </div>
+
       <div className="col-12 border-0 bs-body-color">
         <div className="p-4" style={{ backgroundColor: '#ffffff', borderRadius: '8px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
           <div className="d-flex justify-content-center align-items-start mb-4">
@@ -57,7 +80,7 @@ const UserDetail = () => {
             )}
           </div>
 
-          {[
+          {[ 
             { label: 'Name', value: user.name, id: 'name' },
             { label: 'Email', value: user.email, id: 'email' },
             { label: 'Role', value: user.role, id: 'role' },

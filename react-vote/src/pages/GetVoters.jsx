@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom';
 const GetVoters = () => {
   const { data: usersData, error, isLoading, refetch } = useGetUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
-  const navigate = useNavigate();  // useNavigate hook for navigation
+  const navigate = useNavigate();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState(null);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 5;
+  const usersPerPage = 6;
 
   const totalPages = usersData ? Math.ceil(usersData.length / usersPerPage) : 1;
 
@@ -34,7 +34,7 @@ const GetVoters = () => {
   };
 
   const handleUpdate = (userId) => {
-    navigate(`/dashboard/updateusers/${userId}`);  // Navigate to the update page
+    navigate(`/dashboard/updateusers/${userId}`);
   };
 
   const handleDelete = (userId) => {
@@ -55,7 +55,7 @@ const GetVoters = () => {
   };
 
   const handleNavigateToUserDetail = (userId) => {
-    navigate(`/dashboard/userdetails/${userId}`);  // Navigate to the user details page
+    navigate(`/dashboard/userdetails/${userId}`);
   };
 
   if (isLoading) {
@@ -67,81 +67,83 @@ const GetVoters = () => {
   }
 
   return (
-    <div className="container mt-2">
-      <h4 className="fst-italic mb-4 mt-4 py-3">Voter List</h4>
-      <table className="table table-striped table-hover">
-        <thead className="table-primary">
-          <tr>
-            <th>ID</th>
-            <th>Avatar</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Gender</th>
-            <th>Age</th>
-            <th>Address</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentUsers && currentUsers.length > 0 ? (
-            currentUsers.map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>
-                  {user.profileImage ? (
-                    <img
-                      src={`data:image/jpeg;base64,${user.profileImage}`}
-                      alt={`${user.name}'s Profile`}
-                      className="img-fluid rounded-circle"
-                      style={{
-                        width: '40px',
-                        height: '40px',
-                        objectFit: 'cover',
-                        border: '3px solid #007BFF',
-                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                      }}
-                    />
-                  ) : (
-                    'No Image'
-                  )}
-                </td>
-                <td>
-                  <span
-                    onClick={() => handleNavigateToUserDetail(user.id)}
-                    style={{ cursor: 'pointer', color: 'inherit', textDecoration: 'None' }}
-                  >
-                    {user.name}
-                  </span>
-                </td>
-                <td>{user.email}</td>
-                <td>{user.gender}</td>
-                <td>{user.age}</td>
-                <td>{user.address}</td>
-                <td>
-                  <button
-                    onClick={() => handleUpdate(user.id)}
-                    className="btn btn-warning btn-sm mx-1"
-                  >
-                    <Icon icon="mdi:pencil" />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(user.id)}
-                    className="btn btn-danger btn-sm mx-1"
-                  >
-                    <Icon icon="mdi:delete" />
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
+    <div className="container">
+      <h3 className="fst-italic mb-4 mt-4 py-3">Voter List</h3>
+      <div className="table-responsive" style={{ maxHeight: '400px', overflowY: 'auto' }}>
+        <table className="table table-striped table-hover">
+          <thead className="table-primary">
             <tr>
-              <td colSpan="8">No voters found</td>
+              <th>ID</th>
+              <th>Avatar</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Gender</th>
+              <th>Age</th>
+              <th>Address</th>
+              <th>Action</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentUsers && currentUsers.length > 0 ? (
+              currentUsers.map((user) => (
+                <tr key={user.id}>
+                  <td>{user.id}</td>
+                  <td>
+                    {user.profileImage ? (
+                      <img
+                        src={`data:image/jpeg;base64,${user.profileImage}`}
+                        alt={`${user.name}'s Profile`}
+                        className="img-fluid rounded-circle"
+                        style={{
+                          width: '40px',
+                          height: '40px',
+                          objectFit: 'cover',
+                          border: '3px solid #007BFF',
+                          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                        }}
+                      />
+                    ) : (
+                      'No Image'
+                    )}
+                  </td>
+                  <td>
+                    <span
+                      onClick={() => handleNavigateToUserDetail(user.id)}
+                      style={{ cursor: 'pointer', color: 'inherit', textDecoration: 'None' }}
+                    >
+                      {user.name}
+                    </span>
+                  </td>
+                  <td>{user.email}</td>
+                  <td>{user.gender}</td>
+                  <td>{user.age}</td>
+                  <td>{user.address}</td>
+                  <td>
+                    <button
+                      onClick={() => handleUpdate(user.id)}
+                      className="btn btn-warning btn-sm mx-1"
+                    >
+                      <Icon icon="mdi:pencil" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(user.id)}
+                      className="btn btn-danger btn-sm mx-1"
+                    >
+                      <Icon icon="mdi:delete" />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="8">No voters found</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
 
-      <div className="pagination-controls">
+      <div className="pagination-controls mt-3">
         <button
           onClick={handlePreviousPage}
           disabled={currentPage === 1}

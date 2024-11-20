@@ -84,12 +84,12 @@ const UpdateUser = () => {
       <div className="d-flex align-items-center mb-4">
         <FontAwesomeIcon
           icon={faArrowLeft}
-          className="me-2"
+          className="me-2 mt-4"
           size="lg"
           style={{ cursor: 'pointer', color: 'black' }}
           onClick={handleBack}
         />
-        <h4 className="fst-italic m-0">Update User</h4>
+        <h4 className="fst-italic mt-4">Update User</h4>
       </div>
 
       <div className="bs-body-color  p-4 border rounded ">

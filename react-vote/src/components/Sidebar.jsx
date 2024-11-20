@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import Inidalogo from "../asserts/images/ch1.jpg";
+import Inidalogo from "../asserts/images/v1bg.jpg";
 import { Icon } from "@iconify/react";
 
 const Sidebar = () => {
@@ -19,9 +19,9 @@ const Sidebar = () => {
       }}
     >
       <div className="text-center me-5 mb-2">
-        <img src={Inidalogo} alt="Logo" style={{ width: "80px", height: "80px" }} />
+        <img src={Inidalogo} alt="Logo" style={{ width: "100px", height: "100px" }} />
       </div>
-      <ul className="list-unstyled px-3 mt-5 py-3 sidebar-menu">
+      <ul className="list-unstyled px-4 mt-4 py-3 sidebar-menu">
         {[
           { path: "/dashboard/voters", label: "Voters", icon: "mdi:user" },
           { path: "/dashboard/election", label: "Election", icon: "mdi:vote" },

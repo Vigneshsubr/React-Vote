@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { usePostResultMutation } from "../redux/services/resultApi";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const CalculateResultsPage = () => {
   const [pollId, setPollId] = useState("");
   const [postResult, { isLoading, error, isSuccess }] = usePostResultMutation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleCalculateResults = async () => {
     try {
       await postResult(pollId).unwrap();
-      navigate(`/poll/results/${pollId}`);
+      // navigate(`/dashboard/poll/results/${pollId}`);
     } catch (err) {
       console.error("Failed to calculate results:", err);
     }

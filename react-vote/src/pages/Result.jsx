@@ -1,7 +1,7 @@
-// Result.js
+
 import React from 'react';
 import ResultTabs from '../pages/ResultTabs';
-import electronic from '../asserts/images/electronic.jpg'; // Ensure the image path is correct
+import electronic from '../asserts/images/electronic.jpg'; 
 
 const Result = () => {
   return (
@@ -16,7 +16,7 @@ const Result = () => {
         backgroundAttachment: 'fixed',
       }}
     >
-      {/* Dark overlay */}
+      
       <div
         style={{
           position: 'absolute',
@@ -24,12 +24,11 @@ const Result = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.4)', // Dark overlay for a consistent look
+          backgroundColor: 'rgba(0, 0, 0, 0.4)', 
      
         }}
       ></div>
 
-      {/* Content area */}
       <div style={{ position: 'relative', color: 'white', padding: '20px' }}>
         <h3 className="fst-italic mb-4">Manage Results</h3>
         <ResultTabs />

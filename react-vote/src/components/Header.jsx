@@ -1,13 +1,12 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Dropdown } from "react-bootstrap"; // Importing necessary components from React Bootstrap
+import { Dropdown } from "react-bootstrap";
+import { Icon } from "@iconify/react"; // Import the Icon component
 
-const Header = ({ username }) => {
-  //const [showDropdown, setShowDropdown] = useState(false);
+const Header = ({ username, isMobile }) => {
   const navigate = useNavigate();
   const firstLetter = username.charAt(0).toUpperCase();
 
-  // Handle sign out and redirect to signup page
   const handleSignOut = () => {
     localStorage.removeItem("Token");
     sessionStorage.removeItem("Token");
@@ -18,12 +17,24 @@ const Header = ({ username }) => {
     <div
       className="d-flex align-items-center justify-content-between px-3 py-3 text-dark shadow-sm"
       style={{
-        width: "calc(100% - 220px)", // Adjust width for sidebar (assuming sidebar width is 220px)
+        width: isMobile ? "100%" : "calc(100% - 220px)", // Adjust width for sidebar
         backgroundColor: "#F0F0F0",
       }}
     >
       {/* Left side content */}
       <div className="d-flex align-items-center">
+        {isMobile && (
+          <button
+            className="btn me-2"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasSidebar"
+            aria-controls="offcanvasSidebar"
+          >
+            {/* Use Iconify for the offcanvas menu icon */}
+            <Icon icon="mdi:menu" style={{ fontSize: "24px" }} />
+          </button>
+        )}
         <h5 className="mb-0" style={{ fontSize: "18px" }}>
           Dashboard
         </h5>
@@ -34,15 +45,14 @@ const Header = ({ username }) => {
         <span className="fw-bold" style={{ fontSize: "16px" }}>
           {username}
         </span>
-        {/* React Bootstrap Dropdown */}
         <Dropdown align="end">
           <Dropdown.Toggle
-            className="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center ms-2"
-             bsPrefix="custom-toggle"
+            className="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center ms-2"
+            bsPrefix="custom-toggle"
             style={{
-              width: "30px", // Reduced circle size
+              width: "30px",
               height: "30px",
-              fontSize: "19px", // Reduced font size for letter
+              fontSize: "19px",
               cursor: "pointer",
             }}
             id="dropdown-custom-components"
@@ -50,13 +60,7 @@ const Header = ({ username }) => {
             {firstLetter}
           </Dropdown.Toggle>
 
-          <Dropdown.Menu
-            style={{
-              borderRadius: "5px",
-              boxShadow: "0 0 5px rgba(0,0,0,0.15)",
-              backgroundColor: "white", // Added background to dropdown
-            }}
-          >
+          <Dropdown.Menu>
             <Dropdown.Item as={Link} to="/profile">
               Profile
             </Dropdown.Item>

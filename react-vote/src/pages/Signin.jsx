@@ -40,7 +40,7 @@ const SignIn = () => {
                             if (role === 'VOTER') {
                                 navigate('/dashboard/elections');
                             } else if (role === 'CANDIDATE' || role === 'ADMIN') {
-                                navigate('/dashboard/voters');
+                                navigate('/dashboard/pichart');
                             } else {
                                 toast.error("Unauthorized role");
                             }

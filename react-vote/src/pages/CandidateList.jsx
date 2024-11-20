@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useFetchCandidatesByPollIdQuery } from '../redux/services/pollApi';
 import { usePostVoteMutation } from '../redux/services/votecastApi';
-import { useParams } from 'react-router-dom';
-import {jwtDecode} from 'jwt-decode';
-import Card from '../components/Card';
+import { useParams, useNavigate } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-function CandidateList() {
+const CandidateList = () => {
     const { pollId, electionId } = useParams();
+    const navigate = useNavigate();
     const { data: candidates = [], isLoading, error } = useFetchCandidatesByPollIdQuery(pollId);
     const [postVote] = usePostVoteMutation();
     const [selectedCandidate, setSelectedCandidate] = useState(null);
@@ -37,46 +39,80 @@ function CandidateList() {
         }
     };
 
+    const handleBack = () => {
+        navigate(-1); // Navigate back
+    };
+
     if (isLoading) return <p>Loading Candidates...</p>;
     if (error) return <p>Error loading candidates: {error.message}</p>;
 
     return (
-        <div>
-            <h4>Candidates for Poll {pollId}</h4>
-            <div className="candidate-list" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+        <div className="container mt-4" style={{ backgroundColor: '#f8f9fa', padding: '20px', borderRadius: '8px' }}>
+            {/* Header Section with Back Arrow */}
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <div className="d-flex align-items-center">
+                    <FontAwesomeIcon
+                        icon={faArrowLeft}
+                        className="me-2"
+                        size="lg"
+                        style={{ cursor: 'pointer', color: 'black' }}
+                        onClick={handleBack}
+                    />
+                    <h4 className="fst-italic">Candidates for Poll {pollId}</h4>
+                </div>
+            </div>
+
+            {/* Candidate List as Cards */}
+            <div className="row justify-content-center g-4">
                 {candidates.map((candidate) => (
-                    <Card
-                        key={candidate.id}
-                        image={`data:image/jpeg;base64,${candidate.profileImage}`}
-                        className="candidate-card"
-                    >
-                        <input
-                            type="radio"
-                            id={`candidate-${candidate.id}`}
-                            name="candidate"
-                            value={candidate.id}
-                            checked={selectedCandidate === candidate.id}
-                            onChange={() => setSelectedCandidate(candidate.id)}
-                            style={{ marginRight: '10px' }}
-                        />
-                        <label htmlFor={`candidate-${candidate.id}`}>
-                            {candidate.name}
-                        </label>
-                    </Card>
+                    <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={candidate.id}>
+                        <div className="card h-100 shadow-sm" style={{ maxWidth: '250px', margin: '0 auto' }}>
+                            <img
+                                src={`data:image/jpeg;base64,${candidate.profileImage}`}
+                                className="card-img-top"
+                                alt={candidate.name}
+                                style={{
+                                    height: '200px',
+                                    objectFit: 'cover',
+                                    borderRadius: '8px 8px 0 0',
+                                }}
+                            />
+                            <div className="card-body text-center">
+                                <h5 className="card-title">{candidate.name}</h5>
+                                <p className="card-text">Candidate ID: {candidate.id}</p>
+                                <input
+                                    type="radio"
+                                    id={`candidate-${candidate.id}`}
+                                    name="candidate"
+                                    value={candidate.id}
+                                    checked={selectedCandidate === candidate.id}
+                                    onChange={() => setSelectedCandidate(candidate.id)}
+                                    style={{ marginRight: '10px' }}
+                                />
+                                <label htmlFor={`candidate-${candidate.id}`}>
+                                    Select {candidate.name}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 ))}
             </div>
 
-            <button
-                onClick={handleVote}
-                disabled={!selectedCandidate}
-                className="btn btn-primary mt-3"
-            >
-                Cast Vote
-            </button>
+            {/* Vote Button */}
+            <div className="text-center mt-4">
+                <button
+                    onClick={handleVote}
+                    disabled={!selectedCandidate}
+                    className="btn btn-primary"
+                >
+                    Cast Vote
+                </button>
+            </div>
 
-            {message && <p>{message}</p>}
+            {/* Message */}
+            {message && <p className="text-center mt-3 text-success">{message}</p>}
         </div>
     );
-}
+};
 
 export default CandidateList;
