@@ -1,60 +1,76 @@
-// App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
+
 import './App.css';
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
+// Pages
 import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
-import UserDetail from './pages/UserDetail';
-import UpdateUser from './pages/UpdateUser';
-import DashboardLayout from './components/DashboardLayout';
 import HomePage from './pages/HomePage';
-import Vote from './pages/Vote';
-import Election from './pages/Election';
-import Poll from './pages/Poll';
-import Candidate from './pages/Candidate';
-import ElectionList from './pages/ElectionList';
+import DashboardLayout from './components/DashboardLayout';
 import PollList from './pages/PollList';
 import CandidateList from './pages/CandidateList';
-import Result from './pages/Result';
-import GetVoters from './pages/GetVoters';  // Import GetVoters here
-import ElectionDashboard from './pages/ElectionDashboard';
+import ElectionList from './pages/ElectionList';
+import GetVoters from './pages/GetVoters';
 import CreateUser from './pages/CreateUser';
+import CreateElection from './pages/CreateElection';
+import GetCandidates from './pages/GetCandidates';
+import CreateCandidate from './pages/CreateCandidate';
+import UpdateUser from './pages/UpdateUser';
+import UserDetail from './pages/UserDetail';
+import Poll from './pages/Poll';
+import ElectionDashboard from './pages/ElectionDashboard';
+import CalculateResultsPage from './pages/CalculateResultsPage ';
+import PollResultsPage from './pages/PollResultsPage ';
 
 function App() {
   return (
     <Router>
       <Routes>
         {/* Public Routes */}
-        <Route path="/">
-          <Route index element={<HomePage />} />
-          <Route path="signup" element={<SignUp />} />
-          <Route path="signin" element={<SignIn />} />
-        </Route>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
 
-        {/* Dashboard Routes with Sidebar (DashboardLayout) */}
-        <Route path="dashboard" element={<DashboardLayout />}>
-          <Route index element={<HomePage />} /> {/* Optional homepage/dashboard overview */}
-          <Route path="vote" element={<Vote />} />
-          <Route path="voters" element={<GetVoters />} /> 
-          <Route path="updateusers/:id" element={<UpdateUser />} />
-          <Route path="userdetails/:id" element={<UserDetail />} />
-          <Route path="election" element={<Election />} />
-          <Route path="poll" element={<Poll />} />
-          <Route path="candidate" element={<Candidate />} />
-          <Route path="elections" element={<ElectionList />} />
-          <Route path="result" element={<Result />} />
+        {/* Shared Routes for Voter and Admin */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={['VOTER', 'ADMIN']}>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route path="polls/:electionId" element={<PollList />} />
           <Route path="candidates/:pollId/:electionId" element={<CandidateList />} />
-          
+          <Route path="elections" element={<ElectionList />} />
+          <Route path="pichart" element={<ElectionDashboard />} />
+          <Route path="viewresult" element={<PollResultsPage/>}/>
+        </Route>
 
-          {/* Use GetVoters here as a standalone page */}
-           {/* The new route for GetVoters */}
-           <Route path="/dashboard/userdetails/:id" element={<UserDetail />} />
-           <Route path="/dashboard/updateusers/:id" element={<UpdateUser />} />
-           <Route path='/dashboard/createuser' element={<CreateUser/>}/>
-           <Route path="/dashboard/pichart" element={<ElectionDashboard/>}/>
+        {/* Admin-Specific Routes */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={['ADMIN']}>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="voters" element={<GetVoters />} />
+          <Route path="createuser" element={<CreateUser />} />
+          <Route path="createelection" element={<CreateElection />} />
+          <Route path="getcandidates" element={<GetCandidates />} />
+          <Route path="createcandidate" element={<CreateCandidate />} />
+          <Route path="updateusers/:id" element={<UpdateUser />} />
+          <Route path="userdetails/:id" element={<UserDetail />} />
+          <Route path="poll" element={<Poll />} />
+          <Route path="calculateresult" element={<CalculateResultsPage/>}/>
+          
+          
         </Route>
       </Routes>
     </Router>

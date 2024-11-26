@@ -58,23 +58,22 @@ const CreateUser = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" >{/*style={{ backgroundColor: '#F5F5F7', padding: '20px', borderRadius: '8px' }} */}
       <div className="d-flex align-items-center mb-4 ">
         <FontAwesomeIcon
           icon={faArrowLeft}
-          className="me-3 mt-4"
-          size="lg"
+          className="me-3 mt-4 mb-4"
           style={{ cursor: 'pointer', color: 'black' }}
           onClick={() => window.history.back()} 
         />
-        <h4 className="fst-italic mb-0 mt-4">Create User</h4>
+        <h4 className="fst-italic mb-4 mt-4 text-light">Create User</h4>
       </div>
       
-      <div className="bs-body-color p-4 border rounded">
+      <div className="bs-body-color p-4 border  rounded ">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           
           <div className="row mb-3">
-            <label htmlFor="name" className="col-sm-2 col-form-label text-dark"><strong>Username</strong></label>
+            <label htmlFor="name" className="col-sm-2 col-form-label text-light"><strong>Username</strong></label>
             <div className="col-sm-10">
               <input
                 type="text"
@@ -90,7 +89,7 @@ const CreateUser = () => {
           </div>
 
           <div className="row mb-3">
-            <label htmlFor="email" className="col-sm-2 col-form-label text-dark"><strong>Email</strong></label>
+            <label htmlFor="email" className="col-sm-2 col-form-label text-light"><strong>Email</strong></label>
             <div className="col-sm-10">
               <input
                 type="email"
@@ -106,7 +105,7 @@ const CreateUser = () => {
           </div>
 
           <div className="row mb-3">
-            <label htmlFor="password" className="col-sm-2 col-form-label text-dark"><strong>Password</strong></label>
+            <label htmlFor="password" className="col-sm-2 col-form-label text-light"><strong>Password</strong></label>
             <div className="col-sm-10">
               <input
                 type="password"
@@ -122,7 +121,7 @@ const CreateUser = () => {
           </div>
 
           <div className="row mb-3">
-            <label htmlFor="gender" className="col-sm-2 col-form-label text-dark"><strong>Gender</strong></label>
+            <label htmlFor="gender" className="col-sm-2 col-form-label text-light"><strong>Gender</strong></label>
             <div className="col-sm-10">
               <select
                 className="form-control"
@@ -141,7 +140,7 @@ const CreateUser = () => {
           </div>
 
           <div className="row mb-3">
-            <label htmlFor="age" className="col-sm-2 col-form-label text-dark"><strong>Age</strong></label>
+            <label htmlFor="age" className="col-sm-2 col-form-label text-light"><strong>Age</strong></label>
             <div className="col-sm-10">
               <input
                 type="number"
@@ -159,7 +158,7 @@ const CreateUser = () => {
           </div>
 
           <div className="row mb-3">
-            <label htmlFor="address" className="col-sm-2 col-form-label text-dark"><strong>Address</strong></label>
+            <label htmlFor="address" className="col-sm-2 col-form-label text-light"><strong>Address</strong></label>
             <div className="col-sm-10">
               <input
                 type="text"
@@ -175,7 +174,7 @@ const CreateUser = () => {
           </div>
 
           <div className="row mb-3">
-            <label htmlFor="profile_Image" className="col-sm-2 col-form-label text-dark"><strong>Profile Image</strong></label>
+            <label htmlFor="profile_Image" className="col-sm-2 col-form-label text-light"><strong>Profile Image</strong></label>
             <div className="col-sm-10">
               <input
                 type="file"

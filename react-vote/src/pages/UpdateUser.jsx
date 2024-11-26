@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate,useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGetSingleUsersQuery, useUpdateUsersMutation } from '../redux/services/voterApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -80,7 +80,7 @@ const UpdateUser = () => {
   }
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" >
       <div className="d-flex align-items-center mb-4">
         <FontAwesomeIcon
           icon={faArrowLeft}
@@ -89,96 +89,120 @@ const UpdateUser = () => {
           style={{ cursor: 'pointer', color: 'black' }}
           onClick={handleBack}
         />
-        <h4 className="fst-italic mt-4">Update User</h4>
+        <h4 className="fst-italic mt-4 text-light">Update User</h4>
       </div>
 
-      <div className="bs-body-color  p-4 border rounded ">
+      <div className="p-4 border rounded">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-        
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label text-dark fw-bold">Name</label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              required
-            />
+          {/* Name */}
+          <div className="row mb-3">
+            <label htmlFor="name" className="col-sm-2 col-form-label text-light fw-bold">Name</label>
+            <div className="col-sm-10">
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label text-dark fw-bold">Email</label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-            />
+          {/* Email */}
+          <div className="row mb-3">
+            <label htmlFor="email" className="col-sm-2 col-form-label text-light fw-bold">Email</label>
+            <div className="col-sm-10">
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="age" className="form-label text-dark fw-bold">Age</label>
-            <input
-              type="number"
-              className="form-control"
-              id="age"
-              name="age"
-              value={formData.age}
-              onChange={handleInputChange}
-              required
-            />
+          {/* Age */}
+          <div className="row mb-3">
+            <label htmlFor="age" className="col-sm-2 col-form-label text-light fw-bold">Age</label>
+            <div className="col-sm-10">
+              <input
+                type="number"
+                className="form-control"
+                id="age"
+                name="age"
+                value={formData.age}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="address" className="form-label text-dark fw-bold">Address</label>
-            <input
-              type="text"
-              className="form-control"
-              id="address"
-              name="address"
-              value={formData.address}
-              onChange={handleInputChange}
-              required
-            />
+          {/* Address */}
+          <div className="row mb-3">
+            <label htmlFor="address" className="col-sm-2 col-form-label text-light fw-bold">Address</label>
+            <div className="col-sm-10">
+              <input
+                type="text"
+                className="form-control"
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="gender" className="form-label text-dark fw-bold">Gender</label>
-            <select
-              className="form-select"
-              id="gender"
-              name="gender"
-              value={formData.gender}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
+          {/* Gender */}
+          <div className="row mb-3">
+            <label htmlFor="gender" className="col-sm-2 col-form-label text-light fw-bold">Gender</label>
+            <div className="col-sm-10">
+              <select
+                className="form-select"
+                id="gender"
+                name="gender"
+                value={formData.gender}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="profileImage" className="form-label text-dark fw-bold">Profile Image</label>
-            <input
-              type="file"
-              className="form-control"
-              id="profileImage"
-              name="profileImage"
-              onChange={handleImageChange}
-              accept="image/*"
-            />
+          {/* Profile Image */}
+          <div className="row mb-3">
+            <label htmlFor="profileImage" className="col-sm-2 col-form-label text-light fw-bold">Profile Image</label>
+            <div className="col-sm-10">
+              <input
+                type="file"
+                className="form-control"
+                id="profileImage"
+                name="profileImage"
+                onChange={handleImageChange}
+                accept="image/*"
+              />
+            </div>
           </div>
 
+          {/* Submit Button */}
           <div className="d-grid">
             <button type="submit" className="btn btn-primary" disabled={isUpdating}>
-              {isUpdating ? <div className="spinner-border spinner-border-sm" role="status"><span className="visually-hidden">Updating...</span></div> : 'Update User'}
+              {isUpdating ? (
+                <div className="spinner-border spinner-border-sm" role="status">
+                  <span className="visually-hidden">Updating...</span>
+                </div>
+              ) : (
+                'Update User'
+              )}
             </button>
           </div>
         </form>

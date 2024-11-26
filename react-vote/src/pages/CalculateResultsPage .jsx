@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { usePostResultMutation } from "../redux/services/resultApi";
-// import { useNavigate } from "react-router-dom";
+ import { useNavigate } from "react-router-dom";
 
 const CalculateResultsPage = () => {
   const [pollId, setPollId] = useState("");
   const [postResult, { isLoading, error, isSuccess }] = usePostResultMutation();
-  // const navigate = useNavigate();
+   const navigate = useNavigate();
+
+   const handleViewResult =()=>{
+    navigate('/dashboard/viewresult');
+   }
 
   const handleCalculateResults = async () => {
     try {
@@ -17,10 +21,20 @@ const CalculateResultsPage = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h4 className="fst-italic">Calculate Poll Results</h4>
+    <div className="container py-4">
+
+      <div className="row align-items-center">
+        <div className="col-6 ">
+          <h4 className="fst-italic text-light">Calculate Poll Results</h4>
+        </div>
+        <div className="col-6 d-flex justify-content-end">
+        <button className="btn btn-primary " onClick={handleViewResult}>Result</button>
+        </div>
+      </div>
+      
+      
       <div className="col-6">
-        <label htmlFor="pollId" className="form-label"><strong>Poll ID:</strong></label>
+        <label htmlFor="pollId" className="form-label text-light"><strong>Poll ID:</strong></label>
         <input
           type="text"
           id="pollId"

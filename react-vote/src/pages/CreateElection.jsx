@@ -37,7 +37,7 @@ const CreateElection = () => {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container pt-4 mt-5">
       <div className="d-flex align-items-center mb-4">
         <FontAwesomeIcon
           icon={faArrowLeft}
@@ -46,14 +46,14 @@ const CreateElection = () => {
           style={{ cursor: 'pointer', color: 'black' }}
           onClick={() => window.history.back()} 
         />
-        <h4 className="fst-italic mb-0">Create Election</h4>
+        <h4 className="fst-italic mb-0  text-light">Create Election</h4>
       </div>
       
       <div className="bs-body-color p-4 border rounded">
         <form onSubmit={handleSubmit}>
          
           <div className="row mb-3">
-            <label htmlFor="name" className="col-sm-2 col-form-label "><strong>Election Name</strong></label>
+            <label htmlFor="name" className="col-sm-2 col-form-label text-light "><strong>Election Name</strong></label>
             <div className="col-sm-10">
               <input
                 type="text"
@@ -70,7 +70,7 @@ const CreateElection = () => {
 
          
           <div className="row mb-3">
-            <label htmlFor="startDate" className="col-sm-2 col-form-label "><strong>Start Date</strong></label>
+            <label htmlFor="startDate" className="col-sm-2 col-form-label text-light "><strong>Start Date</strong></label>
             <div className="col-sm-10">
               <input
                 type="date"
@@ -86,7 +86,7 @@ const CreateElection = () => {
 
          
           <div className="row mb-3">
-            <label htmlFor="endDate" className="col-sm-2 col-form-label "><strong>End Date</strong></label>
+            <label htmlFor="endDate" className="col-sm-2 col-form-label text-light "><strong>End Date</strong></label>
             <div className="col-sm-10">
               <input
                 type="date"

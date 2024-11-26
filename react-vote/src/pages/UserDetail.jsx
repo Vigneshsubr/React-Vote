@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetSingleUsersQuery } from '../redux/services/voterApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faEdit } from '@fortawesome/free-solid-svg-icons';
 import Label from '../components/Label';
 import Input from '../components/Input';
 
@@ -21,10 +21,6 @@ const UserDetail = () => {
     navigate(-1);
   };
 
-  const handleCreate = () => {
-    navigate('/dashboard/createuser'); // Replace with your "Create User" route
-  };
-
   if (isLoading) {
     return (
       <div className="text-center mt-5">
@@ -40,29 +36,40 @@ const UserDetail = () => {
   }
 
   return (
-    <div className="container mt-2" style={{ backgroundColor: '#f8f9fa', padding: '20px', borderRadius: '8px' }}>
-      {/* Row for both Create User Button and User Details */}
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        {/* User Details Title */}
+    <div className="container mt-2 " >{/*style={{ backgroundColor: '#f8f9fa', padding: '20px', borderRadius: '8px' }}/*}
+      {/* Row for Back Button and Title */}
+      <div className="d-flex justify-content-between align-items-center mb-4 ">
         <div className="d-flex align-items-center">
           <FontAwesomeIcon
             icon={faArrowLeft}
-            className="me-2"
+            className="me-2 mt-4"
             size="lg"
             style={{ cursor: 'pointer', color: 'black' }}
             onClick={handleBack}
           />
-          <h4 className="fst-italic me-2">User Details</h4>
+          <h4 className="fst-italic text-white  me-2 mt-4">User Details</h4>
         </div>
 
-        {/* Create User Button on the Right */}
-        <button className="btn btn-primary" onClick={handleCreate}>
-          Create User
-        </button>
+        {/* Edit Icon */}
+        <FontAwesomeIcon
+          icon={faEdit}
+          className="me-3 mt-4"
+          size="lg"
+          style={{ cursor: 'pointer', color: '#007bff' }}
+          onClick={handleEdit}
+          title="Edit User"
+        />
       </div>
 
-      <div className="col-12 border-0 bs-body-color">
-        <div className="p-4" style={{ backgroundColor: '#ffffff', borderRadius: '8px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
+      <div className="col-12 border rounded">
+        <div
+          className="p-4"
+          style={{
+            //backgroundColor: '#ffffff',
+            borderRadius: '8px',
+            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+          }}
+        >
           <div className="d-flex justify-content-center align-items-start mb-4">
             {user.profileImage && (
               <img
@@ -80,17 +87,17 @@ const UserDetail = () => {
             )}
           </div>
 
-          {[ 
+          {[
             { label: 'Name', value: user.name, id: 'name' },
             { label: 'Email', value: user.email, id: 'email' },
             { label: 'Role', value: user.role, id: 'role' },
             { label: 'Gender', value: user.gender, id: 'gender' },
             { label: 'Address', value: user.address, id: 'address' },
-            { label: 'Age', value: user.age, id: 'age', type: 'number' }
+            { label: 'Age', value: user.age, id: 'age', type: 'number' },
           ].map(({ label, value, id, type = 'text' }) => (
             <div className="row mb-3" key={id}>
               <div className="col-3">
-                <Label htmlFor={id} className="form-label" style={{ color: 'black' }}>
+                <Label htmlFor={id} className="form-label" style={{ color: 'white' }}>
                   <strong>{label}:</strong>
                 </Label>
               </div>
@@ -101,16 +108,15 @@ const UserDetail = () => {
                   id={id}
                   value={value}
                   readOnly
-                  style={{ backgroundColor: '#f5f5f5', border: '1px solid #ced4da', padding: '8px' }}
+                  style={{
+                    backgroundColor: '#f5f5f5',
+                    border: '1px solid #ced4da',
+                    padding: '8px',
+                  }}
                 />
               </div>
             </div>
           ))}
-
-          <div className="d-flex justify-content-end mt-4">
-            <button className="btn btn-secondary me-2" onClick={handleBack}>Cancel</button>
-            <button className="btn btn-primary" onClick={handleEdit}>Update</button>
-          </div>
         </div>
       </div>
     </div>

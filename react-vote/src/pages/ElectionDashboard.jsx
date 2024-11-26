@@ -1,6 +1,7 @@
 import React from "react";
 import { Pie } from "react-chartjs-2";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
 
 const ElectionDashboard = () => {
   // Data for the pie charts
@@ -26,11 +27,22 @@ const ElectionDashboard = () => {
     ],
   };
 
+  const navigate = useNavigate();
+
+  const handlevote = () => {
+    navigate("/dashboard/elections");
+  };
+
   return (
     <div className="container py-4">
-      <div className="row text-start">
-        <div className="col-12">
-          <h3 className="mb-4 text-dark">Election Dashboard</h3>
+      <div className="row align-items-center mb-4">
+        <div className="col-6">
+          <h3 className="fst-italic text-light">Election Dashboard</h3>
+        </div>
+        <div className="col-6 text-end">
+          <button className="btn btn-primary me-2 px-5" onClick={handlevote}>
+            Vote
+          </button>
         </div>
       </div>
 
@@ -46,13 +58,10 @@ const ElectionDashboard = () => {
             }}
           >
             <div className="card-body p-3">
-              {/* <h5 className="card-title text-center text-info mb-3">
-                Election and Poll Results
-              </h5> */}
               <div className="row">
                 {/* First Pie Chart */}
                 <div className="col-md-6 mb-3 d-flex justify-content-center">
-                  <div style={{ width: "400px", height: "400px" }}>
+                  <div style={{ width: "300px", height: "400px" }}>
                     <h6 className="text-center text-primary">Election Results</h6>
                     <Pie
                       data={electionData}
@@ -65,13 +74,13 @@ const ElectionDashboard = () => {
                 </div>
                 {/* Second Pie Chart */}
                 <div className="col-md-6 mb-3 d-flex justify-content-center">
-                  <div style={{ width: "400px", height: "400px" }}>
+                  <div style={{ width: "300px", height: "400px" }}>
                     <h6 className="text-center text-success">Poll Results</h6>
                     <Pie
                       data={pollData}
                       options={{
                         maintainAspectRatio: false,
-                      }}
+                      }}  
                       style={{ width: "100%", height: "100%" }}
                     />
                   </div>

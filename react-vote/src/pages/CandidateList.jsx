@@ -47,18 +47,18 @@ const CandidateList = () => {
     if (error) return <p>Error loading candidates: {error.message}</p>;
 
     return (
-        <div className="container mt-4" style={{ backgroundColor: '#f8f9fa', padding: '20px', borderRadius: '8px' }}>
+        <div className="container mt-4" >
             {/* Header Section with Back Arrow */}
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <div className="d-flex align-items-center">
                     <FontAwesomeIcon
                         icon={faArrowLeft}
-                        className="me-2"
+                        className="me-2 mt-4"
                         size="lg"
-                        style={{ cursor: 'pointer', color: 'black' }}
+                        style={{ cursor: 'pointer', color: 'white' }}
                         onClick={handleBack}
                     />
-                    <h4 className="fst-italic">Candidates for Poll {pollId}</h4>
+                    <h4 className="fst-italic text-white mt-4">Candidates for Poll {pollId}</h4>
                 </div>
             </div>
 

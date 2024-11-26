@@ -1,49 +1,59 @@
-import React from 'react'
+import React from 'react';
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-    const pageNumbers = [...Array(totalPages)].map((_, index) => index + 1);
+const Pagination = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+  onPrevious,
+  onNext,
+  usersPerPage,
+  onUsersPerPageChange,
+}) => (
+  <div className="d-flex justify-content-between align-items-center mt-3">
+    <div className="d-flex align-items-center">
+      <label htmlFor="usersPerPage" className="form-label text-light me-2 mb-0">
+        Users Per Page:
+      </label>
+      <select
+        id="usersPerPage"
+        value={usersPerPage}
+        onChange={onUsersPerPageChange}
+        className="form-select"
+        style={{ maxWidth: '100px' }}
+      >
+        {[10, 20, 30, 40, 50].map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </div>
+    <div>
+      <button
+        onClick={onPrevious}
+        disabled={currentPage === 1}
+        className="btn btn-primary mx-1"
+      >
+        Previous
+      </button>
+      {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+        <button
+          key={pageNumber}
+          onClick={() => onPageChange(pageNumber)}
+          className={`btn mx-1 ${currentPage === pageNumber ? 'btn-primary' : 'btn-outline-primary'}`}
+        >
+          {pageNumber}
+        </button>
+      ))}
+      <button
+        onClick={onNext}
+        disabled={currentPage === totalPages}
+        className="btn btn-primary mx-1"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+);
 
-    return (
-      <nav aria-label="Page navigation">
-        <ul className="pagination justify-content-end">
-          <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-            <button
-              className="page-link"
-              onClick={() => onPageChange(currentPage - 1)}
-              aria-label="Previous"
-            >
-              <span aria-hidden="true">&laquo;</span>
-            </button>
-          </li>
-          {pageNumbers.map((number) => (
-            <li
-              key={number}
-              className={`page-item ${currentPage === number ? "active" : ""}`}
-            >
-              <button
-                className="page-link"
-                onClick={() => onPageChange(number)}
-              >
-                {number}
-              </button>
-            </li>
-          ))}
-          <li
-            className={`page-item ${
-              currentPage === totalPages ? "disabled" : ""
-            }`}
-          >
-            <button
-              className="page-link"
-              onClick={() => onPageChange(currentPage + 1)}
-              aria-label="Next"
-            >
-              <span aria-hidden="true">&raquo;</span>
-            </button>
-          </li>
-        </ul>
-      </nav>
-    );
-}
-
-export default Pagination
+export default Pagination;

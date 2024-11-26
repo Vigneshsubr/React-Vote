@@ -35,16 +35,26 @@ const Header = ({ username, isMobile }) => {
             <Icon icon="mdi:menu" style={{ fontSize: "24px" }} />
           </button>
         )}
-        <h5 className="mb-0" style={{ fontSize: "18px" }}>
+        {/* Hide on mobile (d-none d-sm-block) */}
+        {/* <h5
+          className="mb-0 d-none d-sm-block"
+          style={{ fontSize: "18px" }}
+        >
           Dashboard
-        </h5>
+        </h5> */}
       </div>
 
       {/* Right side content */}
       <div className="d-flex align-items-center">
-        <span className="fw-bold" style={{ fontSize: "16px" }}>
+        {/* Hide on mobile (d-none d-sm-block) */}
+        <span
+          className="fw-bold d-none d-sm-block"
+          style={{ fontSize: "16px" }}
+        >
           {username}
         </span>
+
+        {/* Always show the dropdown */}
         <Dropdown align="end">
           <Dropdown.Toggle
             className="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center ms-2"

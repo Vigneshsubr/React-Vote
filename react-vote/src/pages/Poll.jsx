@@ -1,15 +1,15 @@
 import React from "react";
 import PollTab from "./PollTab";
-import electronic from "../asserts/images/electronic.jpg"; // Image path
+//import electronic from "../asserts/images/electronic.jpg"; // Image path
 
 const Poll = () => {
   return (
     <div
       style={{
         position: "relative",
-        minHeight: "100vh",
+        //minHeight: "100vh",
         overflow: "hidden",
-        backgroundImage: `url(${electronic})`,
+       // backgroundImage: `url(${electronic})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
@@ -23,7 +23,7 @@ const Poll = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.4)", // Dark overlay
+         // backgroundColor: "rgba(0, 0, 0, 0.4)", // Dark overlay
         }}
       ></div>
 

@@ -24,10 +24,10 @@ const Sidebar = () => {
       <ul className="list-unstyled px-4 mt-4 py-3 sidebar-menu">
         {[
           { path: "/dashboard/voters", label: "Voters", icon: "mdi:user" },
-          { path: "/dashboard/election", label: "Election", icon: "mdi:vote" },
-          { path: "/dashboard/candidate", label: "Candidate", icon: "mdi:account" },
+          { path: "/dashboard/createelection", label: "Election", icon: "mdi:vote" },
+          { path: "/dashboard/getcandidates", label: "Candidate", icon: "mdi:account" },
           { path: "/dashboard/poll", label: "Poll", icon: "mdi:poll" },
-          { path: "/dashboard/result", label: "Result", icon: "mdi:chart-bar" },
+          { path: "/dashboard/calculateresult", label: "Result", icon: "mdi:chart-bar" },
         ].map((item) => (
           <li className="mb-4" key={item.path}>
             <Link

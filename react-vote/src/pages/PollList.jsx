@@ -42,18 +42,18 @@ const PollList = () => {
   }
 
   return (
-    <div className="container mt-2" style={{ backgroundColor: '#f8f9fa', padding: '20px', borderRadius: '8px' }}>
+    <div className="container mt-2" >
       {/* Header with Back Arrow and Title */}
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div className="d-flex align-items-center">
           <FontAwesomeIcon
             icon={faArrowLeft}
-            className="me-2"
+            className="me-2 mt-3"
             size="lg"
             style={{ cursor: 'pointer', color: 'black' }}
             onClick={handleBack}
           />
-          <h4 className="fst-italic me-2">Select a Poll</h4>
+          <h4 className="fst-italic me-2 text-white mt-3">Select a Poll</h4>
         </div>
       </div>
 
@@ -63,7 +63,7 @@ const PollList = () => {
           className="p-4"
           style={{
             backgroundColor: '#ffffff',
-            borderRadius: '8px',
+            borderRadius: '9px',
             boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
           }}
         >

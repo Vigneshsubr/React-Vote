@@ -23,13 +23,13 @@ const ElectionList = () => {
   if (error) return <p>Error loading elections</p>;
 
   return (
-    <div className="container mt-2" style={{ backgroundColor: '#f8f9fa', padding: '20px', borderRadius: '8px' }}>
+    <div className="container mt-2" >
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h4 className="fst-italic me-2">Select an Election</h4>
+        <h4 className="fst-italic text-white mt-3 me-2">Select an Election</h4>
       </div>
 
       {/* Dropdown to select an election */}
-      <div className="col-12 border-0 bs-body-color">
+      <div className="col-12 border-0">
         <div className="p-4" style={{ backgroundColor: '#ffffff', borderRadius: '8px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
           <div className="mb-3">
             <label htmlFor="electionSelect" className="form-label">Choose an Election:</label>

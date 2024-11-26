@@ -3,6 +3,7 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import { Outlet } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import electronic from "../asserts/images/electronic.jpg"; // Import your image file
 
 const DashboardLayout = () => {
   const [username, setUsername] = useState("");
@@ -36,7 +37,7 @@ const DashboardLayout = () => {
             tabIndex="-1"
             id="offcanvasSidebar"
             aria-labelledby="offcanvasSidebarLabel"
-            style={{ backgroundColor: "#292a2c", width: "200px" }} 
+            style={{ backgroundColor: "#292a2c", width: "200px" }}
           >
             <div className="offcanvas-header">
               <h5 className="offcanvas-title text-light" id="offcanvasSidebarLabel">
@@ -92,6 +93,11 @@ const DashboardLayout = () => {
           className="content"
           style={{
             marginTop: "56px", // Align content to start below the header
+            backgroundImage: `url(${electronic})`, // Add the background image here
+            backgroundSize: "cover", // Ensure the image covers the entire area
+            backgroundRepeat: "no-repeat", // Prevent repeating
+            backgroundPosition: "center", // Center the image
+            minHeight: "calc(100vh - 56px)", // Ensure it fills the remaining height
           }}
         >
           <Outlet />
@@ -102,3 +108,4 @@ const DashboardLayout = () => {
 };
 
 export default DashboardLayout;
+

@@ -38,7 +38,7 @@ const SignIn = () => {
                         toast.success("Login successful!", { autoClose: 500 });
                         setTimeout(() => {
                             if (role === 'VOTER') {
-                                navigate('/dashboard/elections');
+                                navigate('/dashboard/pichart');
                             } else if (role === 'CANDIDATE' || role === 'ADMIN') {
                                 navigate('/dashboard/pichart');
                             } else {

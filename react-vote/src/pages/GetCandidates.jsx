@@ -1,21 +1,23 @@
 import React, { useState } from 'react';
 import { useGetAllCandidateQuery, useDeleteCandidateMutation } from '../redux/services/candidateApi';
 import Modal from '../components/Modal';
+import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
+import Pagination from '../components/Pagination';  // Import the Pagination component
 
 const GetCandidates = ({ onUpdateCandidate, onViewCandidate }) => {
     const { data: candidatesData, error, isLoading, refetch } = useGetAllCandidateQuery();
-    const [deleteCandidate] = useDeleteCandidateMutation(); 
+    const [deleteCandidate] = useDeleteCandidateMutation();
+    const navigate = useNavigate();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [candidateIdToDelete, setCandidateIdToDelete] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const candidatesPerPage = 5;
+    const [usersPerPage, setUsersPerPage] = useState(7);  // Default users per page is 7
 
-  
-    const totalPages = candidatesData ? Math.ceil(candidatesData.length / candidatesPerPage) : 1;
-    const indexOfLastCandidate = currentPage * candidatesPerPage;
-    const indexOfFirstCandidate = indexOfLastCandidate - candidatesPerPage;
+    const totalPages = candidatesData ? Math.ceil(candidatesData.length / usersPerPage) : 1;
+    const indexOfLastCandidate = currentPage * usersPerPage;
+    const indexOfFirstCandidate = indexOfLastCandidate - usersPerPage;
     const currentCandidates = candidatesData ? candidatesData.slice(indexOfFirstCandidate, indexOfLastCandidate) : [];
 
     const handleNextPage = () => {
@@ -35,17 +37,17 @@ const GetCandidates = ({ onUpdateCandidate, onViewCandidate }) => {
     };
 
     const handleDelete = (candidateId) => {
-        setCandidateIdToDelete(candidateId); 
-        setIsModalOpen(true); 
+        setCandidateIdToDelete(candidateId);
+        setIsModalOpen(true);
     };
 
     const confirmDelete = async () => {
         try {
-            await deleteCandidate(candidateIdToDelete).unwrap(); 
+            await deleteCandidate(candidateIdToDelete).unwrap();
             console.log(`Candidate with ID: ${candidateIdToDelete} deleted successfully`);
-            refetch(); 
+            refetch();
             setIsModalOpen(false);
-            setCandidateIdToDelete(null); 
+            setCandidateIdToDelete(null);
         } catch (err) {
             console.error('Failed to delete candidate: ', err);
         }
@@ -54,6 +56,15 @@ const GetCandidates = ({ onUpdateCandidate, onViewCandidate }) => {
     const handleNavigateToCandidateDetail = (candidateId) => {
         onViewCandidate(candidateId);
     };
+
+    const handleUsersPerPageChange = (event) => {
+        setUsersPerPage(Number(event.target.value));
+        setCurrentPage(1);  // Reset to the first page whenever page size changes
+    };
+
+    const handleCreateCandidate = () => {
+        navigate('/dashboard/createcandidate');
+      };
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -64,10 +75,18 @@ const GetCandidates = ({ onUpdateCandidate, onViewCandidate }) => {
     }
 
     return (
-        <div className="container mt-5">
-            <h4 className="fst-italic mb-4">Candidate List</h4>
-            <table className="table table-striped">
-                <thead>
+        <div className="container pt-5">
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <h4 className="fst-italic text-light">Candidate List</h4>
+                <button 
+                    onClick={handleCreateCandidate}  // Assuming null navigates to create a new candidate
+                    className="btn btn-primary"
+                >
+                    Create Candidate
+                </button>
+            </div>
+            <table className="table table-striped table-responsive">
+                <thead className="table-danger" style={{ position: 'sticky', top: '0', zIndex: '1' }}>
                     <tr>
                         <th>Image</th>
                         <th>Name</th>
@@ -76,7 +95,7 @@ const GetCandidates = ({ onUpdateCandidate, onViewCandidate }) => {
                         <th>Age</th>
                         <th>Address</th>
                         <th>Poll Name</th>
-                        <th>Election Name</th> 
+                        <th>Election Name</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -94,7 +113,7 @@ const GetCandidates = ({ onUpdateCandidate, onViewCandidate }) => {
                                             />
                                         ) : (
                                             <img
-                                                src="path/to/default/avatar.png" 
+                                                src="path/to/default/avatar.png"
                                                 alt="Default Avatar"
                                                 style={{ width: '40px', height: '40px', borderRadius: '50%' }}
                                             />
@@ -113,8 +132,8 @@ const GetCandidates = ({ onUpdateCandidate, onViewCandidate }) => {
                                 <td>{candidate.gender || '--'}</td>
                                 <td>{candidate.age || '--'}</td>
                                 <td>{candidate.address || '--'}</td>
-                                <td>{candidate.poll ? candidate.poll.pollName : '--'}</td> 
-                                <td>{candidate.poll && candidate.poll.election ? candidate.poll.election.name : '--'}</td> 
+                                <td>{candidate.poll ? candidate.poll.pollName : '--'}</td>
+                                <td>{candidate.poll && candidate.poll.election ? candidate.poll.election.name : '--'}</td>
                                 <td>
                                     <button
                                         onClick={() => handleUpdate(candidate.id)}
@@ -138,36 +157,28 @@ const GetCandidates = ({ onUpdateCandidate, onViewCandidate }) => {
                     )}
                 </tbody>
             </table>
-
-           
-            <div className="pagination-controls">
-                <button
-                    onClick={handlePreviousPage}
-                    disabled={currentPage === 1}
-                    className="btn btn-primary"
-                >
-                    Previous
-                </button>
-                <span className="mx-3">Page {currentPage} of {totalPages}</span>
-                <button
-                    onClick={handleNextPage}
-                    disabled={currentPage === totalPages}
-                    className="btn btn-primary"
-                >
-                    Next
-                </button>
-            </div>
-
+    
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+                onPrevious={handlePreviousPage}
+                onNext={handleNextPage}
+                usersPerPage={usersPerPage}
+                onUsersPerPageChange={handleUsersPerPageChange}
+            />
+    
             <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                onSave={confirmDelete} 
+                onSave={confirmDelete}
                 title="Confirm Deletion"
             >
                 <p>Are you sure you want to delete this candidate?</p>
             </Modal>
         </div>
     );
+    
 };
 
 export default GetCandidates;
