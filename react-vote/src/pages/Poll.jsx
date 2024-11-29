@@ -15,7 +15,7 @@ const Poll = () => {
         backgroundAttachment: "fixed",
       }}
     >
-      {/* Dark overlay */}
+     
       <div
         style={{
           position: "absolute",
@@ -27,7 +27,7 @@ const Poll = () => {
         }}
       ></div>
 
-      {/* Main content */}
+      
       <div style={{ position: "relative", color: "white", padding: "20px" }}>
         <h3 className="fst-italic mb-4">Manage Polls</h3>
         <PollTab />

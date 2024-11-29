@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { usePostPollMutation } from '../redux/services/pollApi'; 
+import { usePostPollMutation } from '../redux/services/pollApi';
 import { useGetElectionQuery } from '../redux/services/electionApi';
-import Label from '../components/Label'; 
-import Input from '../components/Input'; 
+import Label from '../components/Label';
+import Input from '../components/Input';
+import Button from '../components/Button';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreatePoll = () => {
   const [pollName, setPollName] = useState('');
   const [electionId, setElectionId] = useState('');
-  const [postPoll, { isLoading, isSuccess, isError }] = usePostPollMutation();
+  const [postPoll, { isLoading }] = usePostPollMutation();
   const { data: elections, error: electionsError, isLoading: isElectionsLoading } = useGetElectionQuery();
 
   const handleSubmit = async (e) => {
@@ -18,14 +21,15 @@ const CreatePoll = () => {
         election: { id: electionId },
       };
       await postPoll(pollData).unwrap();
-      alert('Poll created successfully!');
+      toast.success('Poll created successfully!');
     } catch (error) {
-      console.error('Failed to create poll:', error);
+      toast.error('Failed to create poll. Please try again.');
     }
   };
 
   return (
     <div className="container mt-5">
+      <ToastContainer />
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h4 className="fst-italic">Create New Poll</h4>
       </div>
@@ -74,7 +78,7 @@ const CreatePoll = () => {
                   ) : (
                     elections.map((election) => (
                       <option key={election.id} value={election.id}>
-                        {election.name} 
+                        {election.name}
                       </option>
                     ))
                   )}
@@ -82,17 +86,18 @@ const CreatePoll = () => {
               </div>
             </div>
 
-            <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={isLoading}
-            >
-              {isLoading ? 'Creating Poll...' : 'Create Poll'}
-            </button>
+            <div className="row align-items-center">
+              <div className="col-12 d-flex justify-content-end">
+                <Button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={isLoading}
+                >
+                  {isLoading ? 'Creating Poll...' : 'Create Poll'}
+                </Button>
+              </div>
+            </div>
           </form>
-
-          {isSuccess && <p className="text-success mt-3">Poll created successfully!</p>}
-          {isError && <p className="text-danger mt-3">Error creating poll. Please try again.</p>}
         </div>
       </div>
     </div>

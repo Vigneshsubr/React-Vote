@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { usePostResultMutation } from "../redux/services/resultApi";
  import { useNavigate } from "react-router-dom";
+import Input from "../components/Input";
+import Label from "../components/Label";
+import Button from "../components/Button";
 
 const CalculateResultsPage = () => {
   const [pollId, setPollId] = useState("");
@@ -28,14 +31,14 @@ const CalculateResultsPage = () => {
           <h4 className="fst-italic text-light">Calculate Poll Results</h4>
         </div>
         <div className="col-6 d-flex justify-content-end">
-        <button className="btn btn-primary " onClick={handleViewResult}>Result</button>
+        <Button className="btn btn-primary " onClick={handleViewResult}>Result</Button>
         </div>
       </div>
       
       
       <div className="col-6">
-        <label htmlFor="pollId" className="form-label text-light"><strong>Poll ID:</strong></label>
-        <input
+        <Label htmlFor="pollId" className="form-label text-light"><strong>Poll ID:</strong></Label>
+        <Input
           type="text"
           id="pollId"
           value={pollId}
@@ -43,13 +46,13 @@ const CalculateResultsPage = () => {
           className="form-control"
         />
       </div>
-      <button
+      <Button
         onClick={handleCalculateResults}
         disabled={isLoading}
         className="btn btn-primary mt-3"
       >
         {isLoading ? "Calculating..." : "Calculate Results"}
-      </button>
+      </Button>
 
       {isSuccess && <p className="alert alert-success mt-3">Your result was calculated successfully!</p>}
 

@@ -27,7 +27,7 @@ export const signInfields = [
   { label: "Password", type: "password", name: "password", placeholder: "Enter Password" }
 ]
 
-// constants/fields.js
+
 
 export const signupSchema = yup.object().shape({
   name: yup

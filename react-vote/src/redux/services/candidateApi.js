@@ -42,5 +42,5 @@ export const candidateApi = createApi({
   }),
 });
 
-// Ensure the correct export
+
 export const { usePostCandidateMutation, useGetAllCandidateQuery, useDeleteCandidateMutation } = candidateApi;

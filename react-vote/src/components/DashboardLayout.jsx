@@ -3,7 +3,7 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import { Outlet } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import electronic from "../asserts/images/electronic.jpg"; // Import your image file
+import electronic from "../asserts/images/electronic.jpg"; 
 
 const DashboardLayout = () => {
   const [username, setUsername] = useState("");
@@ -13,13 +13,13 @@ const DashboardLayout = () => {
     const storedName = sessionStorage.getItem("Name");
     setUsername(storedName || "Guest");
 
-    // Check screen size for responsiveness
+    
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize(); // Run on mount to check initial screen size
+    handleResize(); 
 
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -28,10 +28,10 @@ const DashboardLayout = () => {
 
   return (
     <div className="d-flex flex-row container-fluid p-0 vh-100">
-      {/* Sidebar */}
+      
       {isMobile ? (
         <>
-          {/* Offcanvas for Mobile */}
+          
           <div
             className="offcanvas offcanvas-start"
             tabIndex="-1"
@@ -59,7 +59,7 @@ const DashboardLayout = () => {
         <div
           className="position-fixed vh-100"
           style={{
-            width: "220px", // Fixed width for the sidebar on larger screens
+            width: "220px", 
             backgroundColor: "#292a2c",
             zIndex: 1,
           }}
@@ -68,18 +68,18 @@ const DashboardLayout = () => {
         </div>
       )}
 
-      {/* Main Content */}
+      
       <div
         className="flex-grow-1"
         style={{
-          marginLeft: isMobile ? "0" : "220px", // Adjust margin for mobile
+          marginLeft: isMobile ? "0" : "220px", 
         }}
       >
-        {/* Header */}
+       
         <div
           className="position-fixed w-100"
           style={{
-            height: "58px", // Fixed height for the header
+            height: "58px", 
             backgroundColor: "#F0F0F0",
             zIndex: 2,
             top: 0,
@@ -88,16 +88,16 @@ const DashboardLayout = () => {
           <Header username={username} isMobile={isMobile} />
         </div>
 
-        {/* Page Content */}
+       
         <div
           className="content"
           style={{
-            marginTop: "56px", // Align content to start below the header
-            backgroundImage: `url(${electronic})`, // Add the background image here
-            backgroundSize: "cover", // Ensure the image covers the entire area
-            backgroundRepeat: "no-repeat", // Prevent repeating
-            backgroundPosition: "center", // Center the image
-            minHeight: "calc(100vh - 56px)", // Ensure it fills the remaining height
+            marginTop: "56px", 
+            backgroundImage: `url(${electronic})`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat", 
+            backgroundPosition: "center",
+            minHeight: "calc(100vh - 56px)", 
           }}
         >
           <Outlet />

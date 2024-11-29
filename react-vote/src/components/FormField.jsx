@@ -6,7 +6,7 @@ const FormField = ({ field, register, errors }) => {
             <label htmlFor={field.name} className="form-label">
                 <strong>{field.label}</strong>
             </label>
-            {/* Handle textarea input */}
+           
             {field.type === "textarea" ? (
                 <textarea
                     className={`form-control ${errors[field.name] ? 'is-invalid' : ''}`}
@@ -14,12 +14,12 @@ const FormField = ({ field, register, errors }) => {
                     placeholder={field.placeholder}
                 />
             ) : field.type === "select" ? (
-                // Handle select input (e.g., for gender selection)
+               
                 <select
                     className={`form-control ${errors[field.name] ? 'is-invalid' : ''}`}
                     {...register(field.name)}
                 >
-                    <option value="">{field.placeholder}</option> {/* Default option */}
+                    <option value="">{field.placeholder}</option> 
                     {field.options.map((option, index) => (
                         <option key={index} value={option.value}>
                             {option.label}
@@ -27,7 +27,7 @@ const FormField = ({ field, register, errors }) => {
                     ))}
                 </select>
             ) : (
-                // Handle other input types (e.g., text, email, password)
+                
                 <input
                     className={`form-control ${errors[field.name] ? 'is-invalid' : ''}`}
                     type={field.type}
@@ -35,7 +35,7 @@ const FormField = ({ field, register, errors }) => {
                     placeholder={field.placeholder}
                 />
             )}
-            {/* Display validation errors */}
+            
             {errors && errors[field.name] && (
                 <p className="text-danger mt-2 mb-0">{errors[field.name].message}</p>
             )}

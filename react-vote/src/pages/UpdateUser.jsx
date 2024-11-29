@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useGetSingleUsersQuery, useUpdateUsersMutation } from '../redux/services/voterApi';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  useGetSingleUsersQuery,
+  useUpdateUsersMutation,
+} from "../redux/services/voterApi";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Input from "../components/Input";
+import Button from "../components/Button"
 
 const UpdateUser = () => {
   const navigate = useNavigate();
@@ -12,24 +17,24 @@ const UpdateUser = () => {
   const [updateUsers, { isLoading: isUpdating }] = useUpdateUsersMutation();
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    role: '',
-    age: '',
-    address: '',
-    gender: '',
+    name: "",
+    email: "",
+    role: "",
+    age: "",
+    address: "",
+    gender: "",
     profileImage: null,
   });
 
   useEffect(() => {
     if (user) {
       setFormData({
-        name: user.name || '',
-        email: user.email || '',
-        role: user.role || '',
-        age: user.age || '',
-        address: user.address || '',
-        gender: user.gender || '',
+        name: user.name || "",
+        email: user.email || "",
+        role: user.role || "",
+        age: user.age || "",
+        address: user.address || "",
+        gender: user.gender || "",
         profileImage: null,
       });
     }
@@ -47,7 +52,6 @@ const UpdateUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const updatedUserData = new FormData();
-
     Object.keys(formData).forEach((key) => {
       updatedUserData.append(key, formData[key]);
     });
@@ -56,8 +60,8 @@ const UpdateUser = () => {
       await updateUsers({ id, updateUserData: updatedUserData }).unwrap();
       navigate(`/dashboard/userdetails/${id}`);
     } catch (error) {
-      console.error('Update failed', error);
-      alert('Update failed: ' + (error.data?.message || 'Unknown error'));
+      console.error("Update failed", error);
+      alert("Update failed: " + (error.data?.message || "Unknown error"));
     }
   };
 
@@ -76,17 +80,28 @@ const UpdateUser = () => {
   }
 
   if (error) {
-    return <div className="alert alert-danger text-center">Error fetching user details!</div>;
+    return (
+      <div className="alert alert-danger text-center">
+        Error fetching user details!
+      </div>
+    );
   }
 
+  const formFields = [
+    { label: "Name", name: "name", type: "text" },
+    { label: "Email", name: "email", type: "email" },
+    { label: "Age", name: "age", type: "number" },
+    { label: "Address", name: "address", type: "text" },
+  ];
+
   return (
-    <div className="container mt-5" >
+    <div className="container mt-5">
       <div className="d-flex align-items-center mb-4">
         <FontAwesomeIcon
           icon={faArrowLeft}
           className="me-2 mt-4"
           size="lg"
-          style={{ cursor: 'pointer', color: 'black' }}
+          style={{ cursor: "pointer", color: "white" }}
           onClick={handleBack}
         />
         <h4 className="fst-italic mt-4 text-light">Update User</h4>
@@ -94,73 +109,35 @@ const UpdateUser = () => {
 
       <div className="p-4 border rounded">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-          {/* Name */}
-          <div className="row mb-3">
-            <label htmlFor="name" className="col-sm-2 col-form-label text-light fw-bold">Name</label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                className="form-control"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                required
-              />
+          {formFields.map(({ label, name, type }) => (
+            <div className="row mb-3" key={name}>
+              <label
+                htmlFor={name}
+                className="col-sm-2 col-form-label text-light fw-bold"
+              >
+                {label}
+              </label>
+              <div className="col-sm-10">
+                <Input
+                  type={type}
+                  className="form-control"
+                  id={name}
+                  name={name}
+                  value={formData[name]}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
             </div>
-          </div>
+          ))}
 
-          {/* Email */}
           <div className="row mb-3">
-            <label htmlFor="email" className="col-sm-2 col-form-label text-light fw-bold">Email</label>
-            <div className="col-sm-10">
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-          </div>
-
-          {/* Age */}
-          <div className="row mb-3">
-            <label htmlFor="age" className="col-sm-2 col-form-label text-light fw-bold">Age</label>
-            <div className="col-sm-10">
-              <input
-                type="number"
-                className="form-control"
-                id="age"
-                name="age"
-                value={formData.age}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-          </div>
-
-          {/* Address */}
-          <div className="row mb-3">
-            <label htmlFor="address" className="col-sm-2 col-form-label text-light fw-bold">Address</label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                className="form-control"
-                id="address"
-                name="address"
-                value={formData.address}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-          </div>
-
-          {/* Gender */}
-          <div className="row mb-3">
-            <label htmlFor="gender" className="col-sm-2 col-form-label text-light fw-bold">Gender</label>
+            <label
+              htmlFor="gender"
+              className="col-sm-2 col-form-label text-light fw-bold"
+            >
+              Gender
+            </label>
             <div className="col-sm-10">
               <select
                 className="form-select"
@@ -178,11 +155,15 @@ const UpdateUser = () => {
             </div>
           </div>
 
-          {/* Profile Image */}
           <div className="row mb-3">
-            <label htmlFor="profileImage" className="col-sm-2 col-form-label text-light fw-bold">Profile Image</label>
+            <label
+              htmlFor="profileImage"
+              className="col-sm-2 col-form-label text-light fw-bold"
+            >
+              Profile Image
+            </label>
             <div className="col-sm-10">
-              <input
+              <Input
                 type="file"
                 className="form-control"
                 id="profileImage"
@@ -193,17 +174,16 @@ const UpdateUser = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
           <div className="d-grid">
-            <button type="submit" className="btn btn-primary" disabled={isUpdating}>
+            <Button type="submit" className="btn btn-primary" disabled={isUpdating}>
               {isUpdating ? (
                 <div className="spinner-border spinner-border-sm" role="status">
                   <span className="visually-hidden">Updating...</span>
                 </div>
               ) : (
-                'Update User'
+                "Update User"
               )}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

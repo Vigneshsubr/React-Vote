@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './route/ProtectedRoute';
 
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -30,12 +30,12 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Public Routes */}
+       
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
 
-        {/* Shared Routes for Voter and Admin */}
+       
         <Route
           path="/dashboard"
           element={
@@ -51,7 +51,7 @@ function App() {
           <Route path="viewresult" element={<PollResultsPage/>}/>
         </Route>
 
-        {/* Admin-Specific Routes */}
+        
         <Route
           path="/dashboard"
           element={
@@ -69,8 +69,6 @@ function App() {
           <Route path="userdetails/:id" element={<UserDetail />} />
           <Route path="poll" element={<Poll />} />
           <Route path="calculateresult" element={<CalculateResultsPage/>}/>
-          
-          
         </Route>
       </Routes>
     </Router>

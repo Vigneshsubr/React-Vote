@@ -4,7 +4,9 @@ import Modal from '../components/Modal';
 import { Icon } from '@iconify/react';
 import { useNavigate } from 'react-router-dom';
 import Pagination from '../components/Pagination';
-import Table from '../components/Table'; // Import the reusable Table component
+import Table from '../components/Table';
+import Button from '../components/Button';
+
 
 const GetVoters = () => {
   const { data: usersData, error, isLoading, refetch } = useGetUsersQuery();
@@ -137,14 +139,24 @@ const GetVoters = () => {
 
   return (
     <div className="container">
-      <div className="d-flex justify-content-between align-items-center py-3">
-        <h3 className="fst-italic text-light mt-3">Voter List</h3>
-        <button className="btn btn-primary me-4 mt-3" onClick={handleCreateUser}>
+      <div className="d-flex  row justify-content-center align-items-center py-3">
+        <div className='col-6 '>
+            <h3 className="fst-italic text-light mt-3">Voter List</h3>
+
+        </div>
+        <div className='col-6 d-flex justify-content-end'>
+        <Button className="btn btn-primary mt-3" onClick={handleCreateUser}>
           Create User
-        </button>
+        </Button>
+
+        </div>
+        
+        
       </div>
 
-      <Table columns={columns} data={currentUsers} actions={actions} />
+      <div style={{ overflowX: 'auto' }}>
+        <Table columns={columns} data={currentUsers} actions={actions} />
+      </div>
 
       <Pagination
         currentPage={currentPage}

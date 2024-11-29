@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { usePostElectionMutation } from '../redux/services/electionApi'; 
+import { usePostElectionMutation } from '../redux/services/electionApi';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Input from '../components/Input';
+import Label from '../components/Label';
+import Button from '../components/Button';
 
 const CreateElection = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +18,7 @@ const CreateElection = () => {
 
   const handleChange = (e) => {
     setFormData({
-      ...formData,  
+      ...formData,
       [e.target.name]: e.target.value,
     });
   };
@@ -24,7 +27,7 @@ const CreateElection = () => {
     e.preventDefault();
 
     try {
-      await postElection(formData); 
+      await postElection(formData);
       alert('Election created successfully!');
       setFormData({
         name: '',
@@ -36,6 +39,25 @@ const CreateElection = () => {
     }
   };
 
+  const fields = [
+    {
+      id: 'name',
+      label: 'Election Name',
+      type: 'text',
+      placeholder: 'Enter election name',
+    },
+    {
+      id: 'startDate',
+      label: 'Start Date',
+      type: 'date',
+    },
+    {
+      id: 'endDate',
+      label: 'End Date',
+      type: 'date',
+    },
+  ];
+
   return (
     <div className="container pt-4 mt-5">
       <div className="d-flex align-items-center mb-4">
@@ -43,73 +65,42 @@ const CreateElection = () => {
           icon={faArrowLeft}
           className="me-3"
           size="lg"
-          style={{ cursor: 'pointer', color: 'black' }}
-          onClick={() => window.history.back()} 
+          style={{ cursor: 'pointer', color: 'white' }}
+          onClick={() => window.history.back()}
         />
-        <h4 className="fst-italic mb-0  text-light">Create Election</h4>
+        <h4 className="fst-italic mb-0 text-light">Create Election</h4>
       </div>
-      
+
       <div className="bs-body-color p-4 border rounded">
         <form onSubmit={handleSubmit}>
-         
-          <div className="row mb-3">
-            <label htmlFor="name" className="col-sm-2 col-form-label text-light "><strong>Election Name</strong></label>
-            <div className="col-sm-10">
-              <input
-                type="text"
-                className="form-control text-dark"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Enter election name"
-                required
-              />
+          {fields.map(({ id, label, type, placeholder }) => (
+            <div className="row mb-3" key={id}>
+              <Label htmlFor={id} className="col-sm-2 col-form-label text-light">
+                <strong>{label}</strong>
+              </Label>
+              <div className="col-sm-10">
+                <Input
+                  type={type}
+                  className="form-control text-dark"
+                  id={id}
+                  name={id}
+                  value={formData[id]}
+                  onChange={handleChange}
+                  placeholder={placeholder || ''}
+                  required
+                />
+              </div>
             </div>
-          </div>
+          ))}
 
-         
           <div className="row mb-3">
-            <label htmlFor="startDate" className="col-sm-2 col-form-label text-light "><strong>Start Date</strong></label>
-            <div className="col-sm-10">
-              <input
-                type="date"
-                className="form-control text-dark"
-                id="startDate"
-                name="startDate"
-                value={formData.startDate}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
-
-         
-          <div className="row mb-3">
-            <label htmlFor="endDate" className="col-sm-2 col-form-label text-light "><strong>End Date</strong></label>
-            <div className="col-sm-10">
-              <input
-                type="date"
-                className="form-control text-dark"
-                id="endDate"
-                name="endDate"
-                value={formData.endDate}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
-
-        
-          <div className="row mb-3">
-            <div className="col-sm-10 offset-sm-2">
-              <button type="submit" className="btn btn-primary" disabled={isLoading}>
+            <div className="col-sm-10 offset-sm-2 d-flex justify-content-end">
+              <Button type="submit" className="btn btn-primary" disabled={isLoading}>
                 {isLoading ? 'Creating...' : 'Create Election'}
-              </button>
+              </Button>
             </div>
           </div>
 
-          
           {isError && <p className="text-danger mt-3">Error: {error.message}</p>}
           {isSuccess && <p className="text-success mt-3">Election created successfully!</p>}
         </form>

@@ -3,6 +3,8 @@ import { useGetResultsQuery } from "../redux/services/resultApi";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useParams } from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -10,10 +12,13 @@ const PollResultsPage = () => {
   const { pollId: pollIdFromUrl } = useParams();
   const [pollId, setPollId] = useState(pollIdFromUrl || "");
   const [submittedPollId, setSubmittedPollId] = useState(pollIdFromUrl || null);
+  const [userRole, setUserRole] = useState(null);
 
   const { data, error, isLoading } = useGetResultsQuery(submittedPollId, { skip: !submittedPollId });
   const [candidateChartData, setCandidateChartData] = useState(null);
   const [percentageChartData, setPercentageChartData] = useState(null);
+
+  const navigate=useNavigate();
 
   useEffect(() => {
     if (data) {
@@ -46,14 +51,37 @@ const PollResultsPage = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    const token = localStorage.getItem("Token") || sessionStorage.getItem("Token");
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        setUserRole(decodedToken.Role); 
+      } catch (error) {
+        console.error("Invalid token", error);
+      }
+    }
+  }, []);
+
   const handleSubmit = () => {
     setSubmittedPollId(pollId);
   };
 
+  const handleResult=()=>{
+   navigate('/dashboard/calculateresult') 
+  }
+
+
   return (
     <div className="container py-4">
-      <h4 className="fst-italic mb-3 text-light text-center">Poll Results</h4>
-      <div className="d-flex justify-content-center align-items-center mb-3">
+      <div className="d-flex justify-content-between align-items-start mb-4">
+        <h4 className="fst-italic mb-0 text-light">Poll Results</h4>
+        {userRole === "ADMIN" && (
+          <button className="btn btn-success" onClick={handleResult}>Calculate Result</button>
+        )}
+      </div>
+
+      <div className="d-flex justify-content-start  align-items-start mb-3">
         <label htmlFor="pollId" className="form-label me-3 text-light">Enter Poll ID:</label>
         <input
           type="text"
@@ -65,7 +93,7 @@ const PollResultsPage = () => {
         <button
           onClick={handleSubmit}
           disabled={!pollId}
-          className="btn btn-primary ms-3 "
+          className="btn btn-primary ms-3"
         >
           Show Results
         </button>
@@ -76,8 +104,8 @@ const PollResultsPage = () => {
 
       {data && (
         <>
-          <table className="table table-bordered table-responsive mt-3 ">
-            <thead className="table-primary ">
+          <table className="table table-bordered table-responsive mt-3">
+            <thead className="table-primary">
               <tr>
                 <th>Candidate</th>
                 <th>Total Votes</th>
@@ -97,20 +125,24 @@ const PollResultsPage = () => {
             </tbody>
           </table>
 
-          <div className="d-flex gap-4 mt-4 justify-content-center">
+          <div className="d-flex row mt-4 justify-content-center">
+            <div className="col-6 mb-3">
             {candidateChartData && (
-              <div style={{ width: "45%", height: "300px" }}>
-                <h5 className="text-light text-center">Number of Candidates</h5>
+              <div style={{ width: "100%", height: "300px" }}>
+                <h5 className="text-light  ps-3 ms-5 ">No. Candidates</h5>
                 <Pie data={candidateChartData} />
               </div>
             )}
+            </div>
 
-            {percentageChartData && (
-              <div style={{ width: "45%", height: "300px" }}>
-                <h5 className="text-light text-center">Vote Percentage</h5>
+           <div className="col-6 mb-3">
+           {percentageChartData && (
+              <div style={{ width: "100%", height: "300px" }}>
+                <h5 className="text-light ps-3 ms-5">Vote Percentage</h5>
                 <Pie data={percentageChartData} />
               </div>
             )}
+           </div>
           </div>
         </>
       )}

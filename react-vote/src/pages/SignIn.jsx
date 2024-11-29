@@ -8,7 +8,8 @@ import { signInSchema, signInfields } from '../constants/fields';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useAddLoginMutation } from '../redux/services/userApi';
 import { jwtDecode } from 'jwt-decode';
-import vote from "../asserts/images/handsign1.jpg"; // Adjust the background image as needed
+import vote from "../asserts/images/handsign1.jpg"; 
+import Button from '../components/Button';
 
 const SignIn = () => {
     const navigate = useNavigate();
@@ -69,14 +70,14 @@ const SignIn = () => {
             backgroundPosition: 'center', 
             overflow: 'hidden' 
         }}>
-            {/* Background overlay with opacity */}
+           
             <div style={{
                 position: 'absolute',
                 top: 0,
                 left: 0,
                 right: 0,
                 bottom: 0,
-                backgroundColor: 'rgba(0, 0, 0, 0.4)',  // Adjust opacity here
+                backgroundColor: 'rgba(0, 0, 0, 0.4)',  
                 zIndex: 1
             }}></div>
 
@@ -98,7 +99,7 @@ const SignIn = () => {
                         ))}
                     </div>
                     
-                    {/* Forgot Password */}
+                    
                     <div className="text-end mt-2">
                         <small>
                             <span onClick={() => navigate('/forgot-password')} className="text-primary" style={{ cursor: "pointer" }}>
@@ -107,9 +108,9 @@ const SignIn = () => {
                         </small>
                     </div>
 
-                    {/* Centering the button */}
+                    
                     <div className="d-flex justify-content-center mt-4">
-                        <button className="btn btn-primary btn-sm col-8" type="submit">Sign In</button>
+                        <Button className="btn btn-primary btn-sm col-8" type="submit">Sign In</Button>
                     </div>
 
                     <div className="text-center mb-1 mt-2">

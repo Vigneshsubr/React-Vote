@@ -2,9 +2,10 @@ import React from "react";
 import { Pie } from "react-chartjs-2";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
+import Button from "../components/Button";
 
 const ElectionDashboard = () => {
-  // Data for the pie charts
+ 
   const electionData = {
     labels: ["Candidate A", "Candidate B", "Candidate C"],
     datasets: [
@@ -40,13 +41,13 @@ const ElectionDashboard = () => {
           <h3 className="fst-italic text-light">Election Dashboard</h3>
         </div>
         <div className="col-6 text-end">
-          <button className="btn btn-primary me-2 px-5" onClick={handlevote}>
+          <Button className="btn btn-primary me-2 px-5" onClick={handlevote}>
             Vote
-          </button>
+          </Button>
         </div>
       </div>
 
-      {/* Card with Two Pie Charts */}
+     
       <div className="row">
         <div className="col-md-12">
           <div
@@ -59,7 +60,7 @@ const ElectionDashboard = () => {
           >
             <div className="card-body p-3">
               <div className="row">
-                {/* First Pie Chart */}
+               
                 <div className="col-md-6 mb-3 d-flex justify-content-center">
                   <div style={{ width: "300px", height: "400px" }}>
                     <h6 className="text-center text-primary">Election Results</h6>
@@ -72,7 +73,7 @@ const ElectionDashboard = () => {
                     />
                   </div>
                 </div>
-                {/* Second Pie Chart */}
+               
                 <div className="col-md-6 mb-3 d-flex justify-content-center">
                   <div style={{ width: "300px", height: "400px" }}>
                     <h6 className="text-center text-success">Poll Results</h6>

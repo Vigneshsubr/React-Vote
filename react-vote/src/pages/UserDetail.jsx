@@ -44,13 +44,13 @@ const UserDetail = () => {
             icon={faArrowLeft}
             className="me-2 mt-4"
             size="lg"
-            style={{ cursor: 'pointer', color: 'black' }}
+            style={{ cursor: 'pointer', color: 'white' }}
             onClick={handleBack}
           />
           <h4 className="fst-italic text-white  me-2 mt-4">User Details</h4>
         </div>
 
-        {/* Edit Icon */}
+        
         <FontAwesomeIcon
           icon={faEdit}
           className="me-3 mt-4"

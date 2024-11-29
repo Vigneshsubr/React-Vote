@@ -14,7 +14,10 @@ const Input = ({
   required,
   autoFocus,
   autoComplete,
-  readOnly 
+  readOnly,
+  accept,
+  min,
+  max
 }) => {
   return (
     <input
@@ -32,6 +35,9 @@ const Input = ({
       autoFocus={autoFocus}
       autoComplete={autoComplete}
       readOnly={readOnly}
+      accept={accept}
+      min={min}
+      max={max}
       style={{
         cursor: disabled ? 'not-allowed' : 'default',
       }}

@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { useGetElectionQuery } from '../redux/services/electionApi';
 import { useNavigate } from 'react-router-dom';
+import Button from '../components/Button';
+import Label from '../components/Label';
 
 const ElectionList = () => {
   const { data: elections = [], isLoading, error } = useGetElectionQuery();
   const navigate = useNavigate();
   const [selectedElection, setSelectedElection] = useState('');
 
-  // Handle election selection change
+  
   const handleElectionChange = (e) => {
     setSelectedElection(e.target.value);
   };
 
-  // Navigate to election detail page when an election is selected
+  
   const handleElectionSelect = () => {
     if (selectedElection) {
       navigate(`/dashboard/polls/${selectedElection}`);
@@ -28,11 +30,11 @@ const ElectionList = () => {
         <h4 className="fst-italic text-white mt-3 me-2">Select an Election</h4>
       </div>
 
-      {/* Dropdown to select an election */}
+    
       <div className="col-12 border-0">
         <div className="p-4" style={{ backgroundColor: '#ffffff', borderRadius: '8px', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)' }}>
           <div className="mb-3">
-            <label htmlFor="electionSelect" className="form-label">Choose an Election:</label>
+            <Label htmlFor="electionSelect" className="form-label">Choose an Election:</Label>
             <select
               id="electionSelect"
               className="form-select"
@@ -48,14 +50,14 @@ const ElectionList = () => {
             </select>
           </div>
 
-          {/* Button to navigate to the selected election */}
-          <button
+          
+          <Button
             className="btn btn-primary"
             onClick={handleElectionSelect}
             disabled={!selectedElection}
           >
             Go to Election
-          </button>
+          </Button>
         </div>
       </div>
     </div>

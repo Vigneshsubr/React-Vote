@@ -3,6 +3,8 @@ import { useFetchPollsByElectionIdQuery } from '../redux/services/electionApi';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import Button from '../components/Button';
+import Label from '../components/Label';
 
 const PollList = () => {
   const { electionId } = useParams();
@@ -10,21 +12,21 @@ const PollList = () => {
   const navigate = useNavigate();
   const [selectedPoll, setSelectedPoll] = useState('');
 
-  // Handle poll selection change
+
   const handlePollChange = (e) => {
     setSelectedPoll(e.target.value);
   };
 
-  // Navigate to candidates page when a poll is selected
+  
   const handlePollSelect = () => {
     if (selectedPoll) {
       navigate(`/dashboard/candidates/${selectedPoll}/${electionId}`);
     }
   };
 
-  // Navigate back
+  
   const handleBack = () => {
-    navigate(-1); // Navigate to the previous page
+    navigate(-1); 
   };
 
   if (isLoading) {
@@ -43,21 +45,21 @@ const PollList = () => {
 
   return (
     <div className="container mt-2" >
-      {/* Header with Back Arrow and Title */}
+      
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div className="d-flex align-items-center">
           <FontAwesomeIcon
             icon={faArrowLeft}
             className="me-2 mt-3"
             size="lg"
-            style={{ cursor: 'pointer', color: 'black' }}
+            style={{ cursor: 'pointer', color: 'white' }}
             onClick={handleBack}
           />
           <h4 className="fst-italic me-2 text-white mt-3">Select a Poll</h4>
         </div>
       </div>
 
-      {/* Dropdown to select a poll */}
+      
       <div className="col-12 border-0 bs-body-color">
         <div
           className="p-4"
@@ -68,9 +70,9 @@ const PollList = () => {
           }}
         >
           <div className="mb-3">
-            <label htmlFor="pollSelect" className="form-label">
+            <Label htmlFor="pollSelect" className="form-label">
               Choose a Poll:
-            </label>
+            </Label>
             <select
               id="pollSelect"
               className="form-select"
@@ -86,14 +88,14 @@ const PollList = () => {
             </select>
           </div>
 
-          {/* Button to navigate to the selected poll's candidates */}
-          <button
+          
+          <Button
             className="btn btn-primary"
             onClick={handlePollSelect}
             disabled={!selectedPoll}
           >
             Go to Candidates
-          </button>
+          </Button>
         </div>
       </div>
     </div>

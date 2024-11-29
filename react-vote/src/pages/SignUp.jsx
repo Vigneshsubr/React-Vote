@@ -7,7 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { signupSchema, signUpfields } from "../constants/fields";
 import { yupResolver } from '@hookform/resolvers/yup';
 import FormField from "../components/FormField";
-import vote from "../asserts/images/handsign1.jpg"; // You can replace this with another image if desired
+import vote from "../asserts/images/handsign1.jpg"; 
+import Input from "../components/Input";
+import Label from "../components/Label";
+import Button from "../components/Button";
 
 const SignUp = () => {
     const [signup] = useAddSignUpUsersMutation();
@@ -99,7 +102,7 @@ const SignUp = () => {
 
                         {step === 1 && (
                             <div className="form-group mb-3">
-                                <label htmlFor="role" className="form-label">Select Role</label>
+                                <Label htmlFor="role" className="form-label">Select Role</Label>
                                 <select
                                     id="role"
                                     className={`form-select ${errors.role ? 'is-invalid' : ''}`}
@@ -117,39 +120,39 @@ const SignUp = () => {
                         {step === 3 && (
                             <div className="form-group mb-3 mt-4">
                                 <div className="form-check">
-                                    <input className="form-check-input" type="checkbox" {...register("terms", { required: true })} />
-                                    <label className="form-check-label">
+                                    <Input className="form-check-input" type="checkbox" {...register("terms", { required: true })} />
+                                    <Label className="form-check-label">
                                         By creating an account, you agree to our terms and privacy policy.
-                                    </label>
+                                    </Label>
                                 </div>
                                 {errors.terms && <span className="text-danger">You must agree to the terms.</span>}
                             </div>
                         )}
                     </div>
 
-                    {/* Step navigation buttons */}
+                   
                     <div className="d-flex justify-content-between">
                         {step > 1 && (
-                            <button type="button" className="btn btn-secondary" onClick={handlePrev}>
+                            <Button type="button" className="btn btn-secondary" onClick={handlePrev}>
                                 Previous
-                            </button>
+                            </Button>
                         )}
                         {step === 1 ? (
-                            <button 
+                            <Button 
                                 type="button" 
                                 className="btn btn-primary ms-auto" 
                                 onClick={handleNext}
                             >
                                 Next
-                            </button>
+                            </Button>
                         ) : step < 3 ? (
-                            <button type="button" className="btn btn-primary" onClick={handleNext}>
+                            <Button type="button" className="btn btn-primary" onClick={handleNext}>
                                 Next
-                            </button>
+                            </Button>
                         ) : (
-                            <button className="btn btn-primary" type="submit">
+                            <Button className="btn btn-primary" type="submit">
                                 Create Account
-                            </button>
+                            </Button>
                         )}
                     </div>
 

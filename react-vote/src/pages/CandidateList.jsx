@@ -5,6 +5,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import Button from '../components/Button';
+import Input from '../components/Input';
+import Label from '../components/Label';
 
 const CandidateList = () => {
     const { pollId, electionId } = useParams();
@@ -48,7 +51,7 @@ const CandidateList = () => {
 
     return (
         <div className="container mt-4" >
-            {/* Header Section with Back Arrow */}
+            
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <div className="d-flex align-items-center">
                     <FontAwesomeIcon
@@ -62,7 +65,7 @@ const CandidateList = () => {
                 </div>
             </div>
 
-            {/* Candidate List as Cards */}
+           
             <div className="row justify-content-center g-4">
                 {candidates.map((candidate) => (
                     <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={candidate.id}>
@@ -80,7 +83,7 @@ const CandidateList = () => {
                             <div className="card-body text-center">
                                 <h5 className="card-title">{candidate.name}</h5>
                                 <p className="card-text">Candidate ID: {candidate.id}</p>
-                                <input
+                                <Input
                                     type="radio"
                                     id={`candidate-${candidate.id}`}
                                     name="candidate"
@@ -89,27 +92,27 @@ const CandidateList = () => {
                                     onChange={() => setSelectedCandidate(candidate.id)}
                                     style={{ marginRight: '10px' }}
                                 />
-                                <label htmlFor={`candidate-${candidate.id}`}>
+                                <Label htmlFor={`candidate-${candidate.id}`}>
                                     Select {candidate.name}
-                                </label>
+                                </Label>
                             </div>
                         </div>
                     </div>
                 ))}
             </div>
 
-            {/* Vote Button */}
+            
             <div className="text-center mt-4">
-                <button
+                <Button
                     onClick={handleVote}
                     disabled={!selectedCandidate}
                     className="btn btn-primary"
                 >
                     Cast Vote
-                </button>
+                </Button>
             </div>
 
-            {/* Message */}
+            
             {message && <p className="text-center mt-3 text-success">{message}</p>}
         </div>
     );

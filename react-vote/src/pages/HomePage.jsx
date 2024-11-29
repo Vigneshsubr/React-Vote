@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom"; // Ensure you have react-router-dom installed and set up for routing
+import { Link } from "react-router-dom"; 
 //import dashboardImage from '../assets/images/dashboard-image.jpg'; 
-import digitalvote from '../asserts/images/digitalvote.jpg';
+import digitalvote from '../asserts/images/handsign2.jpg';
 
 const HomePage = () => {
     return (

@@ -1,7 +1,5 @@
 import {createApi,fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
-// Filename: electionApi.js
-
 export const electionApi = createApi({
     reducerPath: "ElectionApi",
     baseQuery: fetchBaseQuery({

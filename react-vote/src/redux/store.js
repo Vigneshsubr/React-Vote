@@ -2,7 +2,7 @@
 import {configureStore} from "@reduxjs/toolkit";
 import { userApi } from "./services/userApi";
 import { voterApi } from "./services/voterApi";
-import { electionApi } from "./services/electionApi"; // Ensure correct case
+import { electionApi } from "./services/electionApi"; 
 import { pollApi } from "./services/pollApi";
 import { candidateApi } from "./services/candidateApi";
 import { votecastApi } from "./services/votecastApi";

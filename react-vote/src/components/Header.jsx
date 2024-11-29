@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
-import { Icon } from "@iconify/react"; // Import the Icon component
+import { Icon } from "@iconify/react"; 
 
 const Header = ({ username, isMobile }) => {
   const navigate = useNavigate();
@@ -17,11 +17,11 @@ const Header = ({ username, isMobile }) => {
     <div
       className="d-flex align-items-center justify-content-between px-3 py-3 text-dark shadow-sm"
       style={{
-        width: isMobile ? "100%" : "calc(100% - 220px)", // Adjust width for sidebar
+        width: isMobile ? "100%" : "calc(100% - 220px)", 
         backgroundColor: "#F0F0F0",
       }}
     >
-      {/* Left side content */}
+     
       <div className="d-flex align-items-center">
         {isMobile && (
           <button
@@ -31,7 +31,7 @@ const Header = ({ username, isMobile }) => {
             data-bs-target="#offcanvasSidebar"
             aria-controls="offcanvasSidebar"
           >
-            {/* Use Iconify for the offcanvas menu icon */}
+          
             <Icon icon="mdi:menu" style={{ fontSize: "24px" }} />
           </button>
         )}
@@ -44,9 +44,9 @@ const Header = ({ username, isMobile }) => {
         </h5> */}
       </div>
 
-      {/* Right side content */}
+     
       <div className="d-flex align-items-center">
-        {/* Hide on mobile (d-none d-sm-block) */}
+       
         <span
           className="fw-bold d-none d-sm-block"
           style={{ fontSize: "16px" }}
@@ -54,7 +54,7 @@ const Header = ({ username, isMobile }) => {
           {username}
         </span>
 
-        {/* Always show the dropdown */}
+       
         <Dropdown align="end">
           <Dropdown.Toggle
             className="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center ms-2"
